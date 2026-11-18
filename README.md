@@ -32,9 +32,9 @@ _ChatGPT -> per minima assistenza alla scrittura del codice, confronto e impleme
 # COMANDI
 
 ### Istruzioni
-``` git clone https://github.com/M4rc0ops/Progetto_Metodologie_di_Programmazione.git ```
+``` git clone https://github.com/M4rc0ops/Dungeon_Quest.git ```
 
-``` cd Progetto_Metodologie_di_Programmazione ```
+``` cd Dungeon_Quest ```
 
 ### Build
 ```gradlew build ```
