@@ -13,6 +13,11 @@ public abstract class Ambiente {
         if(nome==null || nome.isBlank()){
             throw new IllegalArgumentException("il nome dell'ambiente non può essere vuoto");
         }
+
+        if(coordinataX < 0 || coordinataY < 0){
+            throw new IllegalArgumentException("le coordinate non possono essere negative");
+        }
+
         if(larghezza<=0 || altezza<=0){
             throw new IllegalArgumentException("le dimensioni devono essere positive");
         }
@@ -22,6 +27,7 @@ public abstract class Ambiente {
         this.larghezza = larghezza;
         this.altezza = altezza;
     }
+
 
 
     public String getNome() {

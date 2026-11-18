@@ -12,6 +12,7 @@ public class Piano {
     private static final int DIMENSIONE_GRIGLIA = 45;
 
 
+
     public  Piano(int numero){
         if(numero<1 || numero>3){
             throw new IllegalArgumentException("il numero del piano deve essere compreso tra 1 e 3");
@@ -178,7 +179,6 @@ public class Piano {
         }
         this.griglia = nuovaGriglia;
     }
-
 
 
 }

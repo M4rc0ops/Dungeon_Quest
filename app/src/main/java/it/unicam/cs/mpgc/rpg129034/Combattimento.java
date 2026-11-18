@@ -8,6 +8,8 @@ public class Combattimento {
         }
     }
 
+
+
     public int calcolaDanno(Entita attaccante, Entita difensore){
         controllaEntita(attaccante, difensore);
 
@@ -15,6 +17,7 @@ public class Combattimento {
 
         return Math.max(1, danno);
     }
+
 
 
     public void eseguiTurno(Eroe eroe, Nemico nemico){

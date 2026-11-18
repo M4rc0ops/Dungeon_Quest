@@ -4,36 +4,19 @@ import java.util.Arrays;
 
 public class MappaPiano3 {
 
+
+    private static final int DIMENSIONE_GRIGLIA = 45;
+
+
+
     public static String[] creaMappa() {
-        String[] mappa = new String[45];
+        String[] mappa = new String[DIMENSIONE_GRIGLIA];
 
-        Arrays.fill(mappa, "#".repeat(45));
+        Arrays.fill(mappa, "#".repeat(DIMENSIONE_GRIGLIA));
 
-        mappa[0]=" ".repeat(45);
-        mappa[1]=" ".repeat(45);
-        mappa[2]=" ".repeat(45);
-        mappa[3]=" ".repeat(45);
-        mappa[4]=" ".repeat(45);
-        mappa[5]=" ".repeat(45);
-        mappa[6]=" ".repeat(45);
-        mappa[7]=" ".repeat(45);
-        mappa[8]=" ".repeat(45);
-        mappa[9]=" ".repeat(45);
-        mappa[10]=" ".repeat(45);
-        mappa[11]=" ".repeat(45);
-        mappa[12]=" ".repeat(45);
-        mappa[13]=" ".repeat(45);
-        mappa[14]=" ".repeat(45);
-        mappa[15]=" ".repeat(45);
-        mappa[16]=" ".repeat(45);
-        mappa[17]=" ".repeat(45);
-        mappa[18]=" ".repeat(45);
-        mappa[19]=" ".repeat(45);
-        mappa[20]=" ".repeat(45);
-        mappa[21]=" ".repeat(45);
-        mappa[22]=" ".repeat(45);
-        mappa[23]=" ".repeat(45);
-        mappa[24]=" ".repeat(45);
+        for (int i = 0; i <= 24; i++) {
+            mappa[i] = " ".repeat(DIMENSIONE_GRIGLIA);
+        }
 
         mappa[25]="                    #########################";
         mappa[26]="                    #_____#_____#_______#___#";
@@ -61,62 +44,63 @@ public class MappaPiano3 {
     }
 
 
+
     public static Piano creaPiano() {
         Piano piano = new Piano(3);
 
         piano.impostaMappa(creaMappa());
 
-        Stanza StanzaIniziale = new Stanza("Stanza Iniziale",1,31,7,7);
-        piano.aggiungiAmbiente(StanzaIniziale);
+        Stanza stanzaIniziale = new Stanza("Stanza Iniziale",1,31,7,7);
+        piano.aggiungiAmbiente(stanzaIniziale);
 
 
-        Stanza stanza1 = new Stanza("Stanza Bassa Sinistra", 9, 39,9,6);
-        piano.aggiungiAmbiente(stanza1);
-        stanza1.aggiungiNemico(new Nemico("Zombie",16,7,2),11,41);
-        stanza1.aggiungiNemico(new Nemico("Zombie",16,7,2),14,41);
-        stanza1.aggiungiNemico(new Nemico("Scheletro",12,7,2),13,42);
+        Stanza stanzaBassaSinistra = new Stanza("Stanza Bassa Sinistra", 9, 39,9,6);
+        piano.aggiungiAmbiente(stanzaBassaSinistra);
+        stanzaBassaSinistra.aggiungiNemico(new Nemico("Zombie",16,7,2),11,41);
+        stanzaBassaSinistra.aggiungiNemico(new Nemico("Zombie",16,7,2),14,41);
+        stanzaBassaSinistra.aggiungiNemico(new Nemico("Scheletro",12,7,2),13,42);
 
 
-        Stanza stanza2 = new Stanza("Stanza Bassa Centrale", 17, 39, 7, 6);
-        piano.aggiungiAmbiente(stanza2);
-        stanza2.aggiungiNemico(new Nemico("Pipistrello",8,6,2),19,41);
-        stanza2.aggiungiNemico(new Nemico("Zombie",16,7,2),21,41);
-        stanza2.aggiungiNemico(new Nemico("Scheletro",12,7,2),20,42);
+        Stanza stanzaBassaCentrale = new Stanza("Stanza Bassa Centrale", 17, 39, 7, 6);
+        piano.aggiungiAmbiente(stanzaBassaCentrale);
+        stanzaBassaCentrale.aggiungiNemico(new Nemico("Pipistrello",8,6,2),19,41);
+        stanzaBassaCentrale.aggiungiNemico(new Nemico("Zombie",16,7,2),21,41);
+        stanzaBassaCentrale.aggiungiNemico(new Nemico("Scheletro",12,7,2),20,42);
 
 
-        Stanza stanza3 = new Stanza("Stanza Bassa Destra", 23, 39, 9, 6);
-        piano.aggiungiAmbiente(stanza3);
-        stanza3.aggiungiNemico(new Nemico("Pipistrello",8,6,2),25,41);
-        stanza3.aggiungiNemico(new Nemico("Pipistrello",8,6,2),28,41);
-        stanza3.aggiungiNemico(new Nemico("Scheletro",12,7,2),27,42);
+        Stanza stanzaBassaDestra = new Stanza("Stanza Bassa Destra", 23, 39, 9, 6);
+        piano.aggiungiAmbiente(stanzaBassaDestra);
+        stanzaBassaDestra.aggiungiNemico(new Nemico("Pipistrello",8,6,2),25,41);
+        stanzaBassaDestra.aggiungiNemico(new Nemico("Pipistrello",8,6,2),28,41);
+        stanzaBassaDestra.aggiungiNemico(new Nemico("Scheletro",12,7,2),27,42);
 
 
-        Stanza stanza4 = new Stanza("Stanza Media Destra", 33, 32, 8, 6);
-        piano.aggiungiAmbiente(stanza4);
-        stanza4.aggiungiNemico(new Nemico("Goblin",20,8,2),35,34);
-        stanza4.aggiungiNemico(new Nemico("Zombie",16,7,2),37,34);
-        stanza4.aggiungiNemico(new Nemico("Zombie",16,7,2),36,35);
+        Stanza stanzaMediaDestra = new Stanza("Stanza Media Destra", 33, 32, 8, 6);
+        piano.aggiungiAmbiente(stanzaMediaDestra);
+        stanzaMediaDestra.aggiungiNemico(new Nemico("Goblin",20,8,2),35,34);
+        stanzaMediaDestra.aggiungiNemico(new Nemico("Zombie",16,7,2),37,34);
+        stanzaMediaDestra.aggiungiNemico(new Nemico("Zombie",16,7,2),36,35);
 
 
-        Stanza stanza5 = new Stanza("Stanza Media Centrale", 26, 32, 7, 6);
-        piano.aggiungiAmbiente(stanza5);
-        stanza5.aggiungiNemico(new Nemico("Zombie", 16,7,2),28,34);
-        stanza5.aggiungiNemico(new Nemico("Goblin",20,8,2),30,34);
-        stanza5.aggiungiNemico(new Nemico("Scheletro",12,7,2),29,35);
+        Stanza stanzaMediaCentrale = new Stanza("Stanza Media Centrale", 26, 32, 7, 6);
+        piano.aggiungiAmbiente(stanzaMediaCentrale);
+        stanzaMediaCentrale.aggiungiNemico(new Nemico("Zombie", 16,7,2),28,34);
+        stanzaMediaCentrale.aggiungiNemico(new Nemico("Goblin",20,8,2),30,34);
+        stanzaMediaCentrale.aggiungiNemico(new Nemico("Scheletro",12,7,2),29,35);
 
 
-        Stanza stanza6 = new Stanza("Stanza Media Sinistra", 18, 32, 8, 6);
-        piano.aggiungiAmbiente(stanza6);
-        stanza6.aggiungiNemico(new Nemico("Goblin",20,8,2),20,34);
-        stanza6.aggiungiNemico(new Nemico("Goblin",20,8,2),23,34);
-        stanza6.aggiungiNemico(new Nemico("Pipistrello",8,6,2),22,35);
+        Stanza stanzaMediaSinistra = new Stanza("Stanza Media Sinistra", 18, 32, 8, 6);
+        piano.aggiungiAmbiente(stanzaMediaSinistra);
+        stanzaMediaSinistra.aggiungiNemico(new Nemico("Goblin",20,8,2),20,34);
+        stanzaMediaSinistra.aggiungiNemico(new Nemico("Goblin",20,8,2),23,34);
+        stanzaMediaSinistra.aggiungiNemico(new Nemico("Pipistrello",8,6,2),22,35);
 
 
-        Stanza stanza7 = new Stanza("Stanza alta", 26, 25, 6, 6);
-        piano.aggiungiAmbiente(stanza7);
-        stanza7.aggiungiNemico(new Nemico("Goblin",20,8,2),28,27);
-        stanza7.aggiungiNemico(new Nemico("Goblin",20,8,2),30,27);
-        stanza7.aggiungiNemico(new Nemico("Zombie",16,7,2),29,28);
+        Stanza stanzaAlta = new Stanza("Stanza alta", 26, 25, 6, 6);
+        piano.aggiungiAmbiente(stanzaAlta);
+        stanzaAlta.aggiungiNemico(new Nemico("Goblin",20,8,2),28,27);
+        stanzaAlta.aggiungiNemico(new Nemico("Goblin",20,8,2),30,27);
+        stanzaAlta.aggiungiNemico(new Nemico("Zombie",16,7,2),29,28);
 
 
         Stanza stanzaBoss = new Stanza("Stanza Boss", 32, 25, 9, 6);
@@ -128,19 +112,16 @@ public class MappaPiano3 {
         piano.aggiungiAmbiente(stanzaFinale);
 
 
-        Corridoio corridoio1 = new Corridoio("Corridoio Basso Sinistra", 2, 38, 7, 6);
-        piano.aggiungiAmbiente(corridoio1);
+        Corridoio corridoioBassoSinistra = new Corridoio("Corridoio Basso Sinistra", 2, 38, 7, 6);
+        piano.aggiungiAmbiente(corridoioBassoSinistra);
 
 
-        Corridoio corridoio2 = new Corridoio("Corridoio Basso Destra", 32, 37, 7, 7);
-        piano.aggiungiAmbiente(corridoio2);
+        Corridoio corridoioBassoDestra = new Corridoio("Corridoio Basso Destra", 32, 37, 7, 7);
+        piano.aggiungiAmbiente(corridoioBassoDestra);
 
 
-        Corridoio corridoio3 = new Corridoio("Corridoio Alto Sinistra", 20, 25, 6, 7);
-        piano.aggiungiAmbiente(corridoio3);
-
-
-
+        Corridoio corridoioAltoSinistra = new Corridoio("Corridoio Alto Sinistra", 20, 25, 6, 7);
+        piano.aggiungiAmbiente(corridoioAltoSinistra);
 
 
         return piano;

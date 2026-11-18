@@ -8,6 +8,8 @@ public abstract class Entita {
     private int attacco;
     private int difesa;
 
+
+
     public Entita(String nome, int puntiVita, int attacco, int difesa){
         if(nome==null || nome.isBlank()){
             throw new IllegalArgumentException("il nome non può essere nullo o vuoto");
@@ -29,6 +31,7 @@ public abstract class Entita {
     }
 
 
+
     public String getNome() {
         return nome;
     }
@@ -46,12 +49,14 @@ public abstract class Entita {
     }
 
 
+
     public void impostaVita(int puntiVita){
         if(puntiVita<0 || puntiVita>maxVita){
             throw new IllegalArgumentException("punti vita non validi");
         }
         this.puntiVita = puntiVita;
     }
+
 
 
     public void subisciDanno(int danno){
@@ -66,9 +71,11 @@ public abstract class Entita {
     }
 
 
+
     public boolean sconfitta(){
         return puntiVita == 0;
     }
+
 
 
     protected void curaPuntiVita(int puntiVita){

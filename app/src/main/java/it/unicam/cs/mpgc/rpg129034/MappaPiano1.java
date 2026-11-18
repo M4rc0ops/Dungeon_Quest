@@ -1,36 +1,24 @@
 package it.unicam.cs.mpgc.rpg129034;
 
-import java.util.*;
+import java.util.Arrays;
 
 public class MappaPiano1 {
 
+
+    private static final int DIMENSIONE_GRIGLIA = 45;
+
+
+
     public static String[] creaMappa(){
-        String[] mappa = new String[45];
+        String[] mappa = new String[DIMENSIONE_GRIGLIA];
 
-        Arrays.fill(mappa,"#".repeat(45));
+        Arrays.fill(mappa,"#".repeat(DIMENSIONE_GRIGLIA));
 
 
-        mappa[0]=" ".repeat(45);
-        mappa[1]=" ".repeat(45);
-        mappa[2]=" ".repeat(45);
-        mappa[3]=" ".repeat(45);
-        mappa[4]=" ".repeat(45);
-        mappa[5]=" ".repeat(45);
-        mappa[6]=" ".repeat(45);
-        mappa[7]=" ".repeat(45);
-        mappa[8]=" ".repeat(45);
-        mappa[9]=" ".repeat(45);
-        mappa[10]=" ".repeat(45);
-        mappa[11]=" ".repeat(45);
-        mappa[12]=" ".repeat(45);
-        mappa[13]=" ".repeat(45);
-        mappa[14]=" ".repeat(45);
-        mappa[15]=" ".repeat(45);
-        mappa[16]=" ".repeat(45);
-        mappa[17]=" ".repeat(45);
-        mappa[18]=" ".repeat(45);
-        mappa[19]=" ".repeat(45);
-        mappa[20]=" ".repeat(45);
+        for (int i = 0; i <= 20; i++) {
+            mappa[i]= " ".repeat(DIMENSIONE_GRIGLIA);
+        }
+
         mappa[21]="                 ##################          ";
         mappa[22]="                 #u__##_____##____#          ";
         mappa[23]="                 #u___s______P____#          ";
@@ -58,6 +46,7 @@ public class MappaPiano1 {
 
         return mappa;
     }
+
 
 
     public static Piano creaPiano(){

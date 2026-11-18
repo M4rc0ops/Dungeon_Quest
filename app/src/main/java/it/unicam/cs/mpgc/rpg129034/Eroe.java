@@ -5,10 +5,12 @@ public class Eroe extends Entita {
     private Posizione posizione;
 
 
+
     public Eroe(String nome){
         super(nome,50,8,5);
         this.posizione = new Posizione(25,41);
     }
+
 
 
     public  Posizione getPosizione(){
@@ -16,17 +18,14 @@ public class Eroe extends Entita {
     }
 
 
-    private void controllaValori(int quantita){
-        if(quantita<0){
-            throw new IllegalArgumentException("il valore deve essere maggiore o uguale a zero");
-        }
-    }
-
 
     public void cura(int quantita){
-        controllaValori(quantita);
+        if(quantita<0){
+            throw new IllegalArgumentException("la quantita di cura non può essere negativa");
+        }
         curaPuntiVita(getPuntiVita() + quantita);
     }
+
 
 
     public void recuperaVitaStanza(){

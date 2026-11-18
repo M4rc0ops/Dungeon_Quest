@@ -29,9 +29,11 @@ public class Stanza extends Ambiente{
     }
 
 
+
     public Stanza(String nome,int coordinataX, int coordinataY, int larghezza, int altezza){
         this(nome, new ArrayList<>(),coordinataX,coordinataY,larghezza,altezza);
     }
+
 
 
     public List<Nemico> getNemici() {
@@ -47,6 +49,7 @@ public class Stanza extends Ambiente{
     }
 
 
+
     public void aggiungiNemico(Nemico nemico){
         if(nemico==null){
             throw new IllegalArgumentException("il nemico non può essere nullo");
@@ -54,6 +57,15 @@ public class Stanza extends Ambiente{
 
         this.nemici.add(nemico);
     }
+
+
+
+    public void aggiungiNemico(Nemico nemico, int x, int y){
+        controllaPosizioneNemico(x,y);
+        aggiungiNemico(nemico);
+        posizioneNemici.put(nemico, new Posizione(x,y));
+    }
+
 
 
     public boolean tuttiNemiciSconfitti(){
@@ -66,11 +78,13 @@ public class Stanza extends Ambiente{
     }
 
 
+
     public void completa(){
         if(tuttiNemiciSconfitti()){
             completata = true;
         }
     }
+
 
 
     private void controllaPosizioneNemico(int x, int y){
@@ -81,12 +95,6 @@ public class Stanza extends Ambiente{
 
     }
 
-
-    public void aggiungiNemico(Nemico nemico, int x, int y){
-        controllaPosizioneNemico(x,y);
-        aggiungiNemico(nemico);
-        posizioneNemici.put(nemico, new Posizione(x,y));
-    }
 
 
     public Posizione getPosizioneNemico(Nemico nemico){

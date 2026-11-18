@@ -8,4 +8,5 @@ public enum TipoCella {
     PORTA_SCALE,
     USCITA_PIANO,
     VUOTO
+
 }
