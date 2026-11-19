@@ -52,6 +52,10 @@ public class SchermataGioco {
 
     private VisualizzatoreMappa visualizzatoreMappa;
 
+    private GestoreMovimento gestoreMovimento;
+
+    private PannelloStatistiche pannelloStatistiche;
+
     public SchermataGioco(
             Stage finestraGioco,
             Piano piano,
@@ -91,6 +95,7 @@ public class SchermataGioco {
         this.nemicoCorrente = null;
         this.visualizzatoreMappa = new  VisualizzatoreMappa();
         this.gestorePiani = new GestorePiani();
+        this.gestoreMovimento = new GestoreMovimento(piano,eroe);
     }
 
     public void mostraSchermataGioco() {
@@ -159,7 +164,7 @@ public class SchermataGioco {
         immagineEroePannello.setFitHeight(120);
         immagineEroePannello.setPreserveRatio(true);
 
-        String percorsoEroe = "/immagini/EROE_GIU.png";
+        String percorsoEroe = "/immagini/EROE_" + direzioneEroe + ".png";
         Image immagineEroe = new Image(
                 getClass().getResourceAsStream(percorsoEroe)
         );
@@ -167,6 +172,7 @@ public class SchermataGioco {
         immagineEroePannello.setImage(immagineEroe);
 
         statisticheEroe = new Label();
+
 
         statisticheEroe.setText(
                 "EROE\n" +
@@ -205,6 +211,8 @@ public class SchermataGioco {
         immagineNemicoPannello.setFitWidth(100);
         immagineNemicoPannello.setFitHeight(120);
         immagineNemicoPannello.setPreserveRatio(true);
+
+        pannelloStatistiche = new PannelloStatistiche(statisticheEroe,statisticheNemico,immagineNemicoPannello, messaggioCura);
 
         VBox statisticheEroeContenitore = new VBox(5);
         statisticheEroeContenitore.setAlignment(Pos.CENTER_LEFT);
@@ -317,71 +325,33 @@ public class SchermataGioco {
             return;
         }
 
-        int nuovaX = eroe.getPosizione().getX();
-        int nuovaY = eroe.getPosizione().getY();
+        Posizione nuovaPosizione = gestoreMovimento.calcolaNuovaPosizione(direzione);
 
-        switch (direzione) {
+        int nuovaX = nuovaPosizione.getX();
+        int nuovaY = nuovaPosizione.getY();
 
-            case "W":
-                nuovaY--;
-                direzioneEroe = "SU";
-                break;
+        direzioneEroe = gestoreMovimento.calcolaDirezioneEroe(direzione);
 
-            case "S":
-                nuovaY++;
-                direzioneEroe = "GIU";
-                break;
+        if (rappresentazioneEroe != null && direzioneEroe != null) {
 
-            case "A":
-                nuovaX--;
-                direzioneEroe = "SINISTRA";
-                break;
-
-            case "D":
-                nuovaX++;
-                direzioneEroe = "DESTRA";
-                break;
-        }
-
-        if (rappresentazioneEroe != null) {
-
-            Image nuovaImmagine = new Image(
-                    getClass().getResourceAsStream(
-                            "/immagini/EROE_" + direzioneEroe + ".png"
-                    )
-            );
+            Image nuovaImmagine = new Image( getClass().getResourceAsStream("/immagini/EROE_" + direzioneEroe + ".png") );
 
             rappresentazioneEroe.setImage(nuovaImmagine);
         }
 
-        if (nuovaX < 0 || nuovaX >= 45 ||
-                nuovaY < 0 || nuovaY >= 45) {
+        if (!gestoreMovimento.posizioneDentroMappa(nuovaPosizione)) {
             return;
         }
 
-        TipoCella tipoDestinazione =
-                piano.getTipoCella(nuovaX, nuovaY);
+        Ambiente ambienteDestinazione = gestoreMovimento.trovaAmbiente(nuovaPosizione);
 
-        Ambiente ambienteDestinazione =
-                piano.trovaAmbiente(nuovaX, nuovaY);
-
-        if ((tipoDestinazione == TipoCella.PAVIMENTO ||
-                tipoDestinazione == TipoCella.PORTA_COMUNE) &&
-                ambienteDestinazione == null) {
+        if(!gestoreMovimento.casellaAttraversabile(nuovaPosizione)){
             return;
         }
 
-        if (tipoDestinazione != TipoCella.PAVIMENTO &&
-                tipoDestinazione != TipoCella.PORTA_COMUNE &&
-                tipoDestinazione != TipoCella.USCITA_PIANO &&
-                tipoDestinazione != TipoCella.PORTA_BOSS &&
-                tipoDestinazione != TipoCella.PORTA_SCALE) {
-            return;
-        }
+        gestoreMovimento.spostaEroe(nuovaPosizione);
 
-        eroe.getPosizione().sposta(nuovaX, nuovaY);
-
-        if (tipoDestinazione == TipoCella.USCITA_PIANO) {
+        if (gestoreMovimento.isUscitaPiano(nuovaPosizione)) {
 
             if (piano.getNumero() == 1) {
                 passaAlSecondoPiano();
@@ -393,38 +363,32 @@ public class SchermataGioco {
             return;
         }
 
-        Ambiente ambiente = ambienteDestinazione;
 
-        if (ambiente != null) {
+        if (ambienteDestinazione != null) {
 
-            if (ambiente != ambienteCorrente) {
+            if (ambienteDestinazione != ambienteCorrente) {
 
-                ambienteCorrente = ambiente;
+                ambienteCorrente = ambienteDestinazione;
                 disegnaGriglia();
             }
             else {
 
-                int origineX =
-                        ambienteCorrente.getCoordinataX();
+                if (rappresentazioneEroe != null) {
 
-                int origineY =
-                        ambienteCorrente.getCoordinataY();
+                    int origineX =
+                            ambienteCorrente.getCoordinataX();
 
-                GridPane.setColumnIndex(
-                        rappresentazioneEroe,
-                        nuovaX - origineX
-                );
+                    int origineY =
+                            ambienteCorrente.getCoordinataY();
 
-                GridPane.setRowIndex(
-                        rappresentazioneEroe,
-                        nuovaY - origineY
-                );
+                    GridPane.setColumnIndex(rappresentazioneEroe, nuovaX - origineX);
+
+                    GridPane.setRowIndex(rappresentazioneEroe, nuovaY - origineY);
+                }
             }
         }
 
-        if (piano.getNumero() == 3 &&
-                nuovaX >= 40 && nuovaX < 45 &&
-                nuovaY >= 25 && nuovaY < 31) {
+        if (gestoreMovimento.isCasellaVittoria(nuovaPosizione)) {
 
             SchermataFinePartita schermataFine =
                     new SchermataFinePartita(
@@ -437,9 +401,9 @@ public class SchermataGioco {
             return;
         }
 
-        if (ambiente instanceof Stanza) {
+        if (ambienteDestinazione instanceof Stanza) {
 
-            Stanza nuovaStanza = (Stanza) ambiente;
+            Stanza nuovaStanza = (Stanza) ambienteDestinazione;
 
             if (nuovaStanza != stanzaCorrente) {
 
@@ -452,7 +416,7 @@ public class SchermataGioco {
 
                 if (nemicoCorrente != null) {
 
-                    aggiornaPannelloNemico();
+                    pannelloStatistiche.aggiornaPannelloNemico(nemicoCorrente);
 
                     informazioniCombattimento.setText(
                             "Nemico: " + nemicoCorrente.getNome() +
@@ -469,52 +433,31 @@ public class SchermataGioco {
 
     private void passaAlSecondoPiano() {
 
-        piano = gestorePiani.creaSecondoPiano();
+        cambiaPiano(gestorePiani.passaAlSecondoPiano(eroe), "SEI AL SECONDO PIANO");
 
-        aggiornaPianoInGioco.accept(piano);
-
-        eroe.getPosizione().sposta(5, 41);
-
-        mostraIndicatorePiano("SEI AL SECONDO PIANO");
-
-        stanzaCorrente = null;
-        nemicoCorrente = null;
-
-        ambienteCorrente = piano.trovaAmbiente(
-                eroe.getPosizione().getX(),
-                eroe.getPosizione().getY()
-        );
-
-        disegnaGriglia();
-
-        informazioniCombattimento.setText(
-                "Sei arrivato al secondo piano"
-        );
     }
 
     private void passaAlTerzoPiano() {
 
-        piano = gestorePiani.creaTerzoPiano();
+        cambiaPiano(gestorePiani.passaAlTerzoPiano(eroe), "SEI AL TERZO PIANO");
 
+    }
+
+
+    public void cambiaPiano(Piano nuovoPiano, String messaggio){
+        piano = nuovoPiano;
         aggiornaPianoInGioco.accept(piano);
-
-        eroe.getPosizione().sposta(4, 32);
-
-        mostraIndicatorePiano("SEI AL TERZO PIANO");
+        gestoreMovimento.aggiornaPiano(nuovoPiano);
+        mostraIndicatorePiano(messaggio);
 
         stanzaCorrente = null;
         nemicoCorrente = null;
 
-        ambienteCorrente = piano.trovaAmbiente(
-                eroe.getPosizione().getX(),
-                eroe.getPosizione().getY()
-        );
+        ambienteCorrente = gestoreMovimento.trovaAmbiente(eroe.getPosizione());
 
         disegnaGriglia();
 
-        informazioniCombattimento.setText(
-                "Sei arrivato al terzo piano"
-        );
+        informazioniCombattimento.setText("Sei arrivato al " + messaggio.toLowerCase() );
     }
 
     private void mostraIndicatorePiano(String messaggio) {
@@ -544,8 +487,8 @@ public class SchermataGioco {
         nemicoCorrente =
                 gestoreCombattimento.getNemicoCorrente();
 
-        aggiornaPannelloNemico();
-        aggiornaPannelloEroe();
+        pannelloStatistiche.aggiornaPannelloNemico(nemicoCorrente);
+        pannelloStatistiche.aggiornaPannelloEroe(eroe);
 
         switch (esito) {
 
@@ -570,7 +513,7 @@ public class SchermataGioco {
                 disegnaGriglia();
 
                 if (stanzaCorrente.tuttiNemiciSconfitti()) {
-                    mostraMessaggioCura();
+                    pannelloStatistiche.mostraMessaggioCura();
                 }
 
                 informazioniCombattimento.setText(
@@ -592,73 +535,6 @@ public class SchermataGioco {
         );
     }
 
-    private void aggiornaPannelloNemico() {
 
-        if (nemicoCorrente == null) {
 
-            statisticheNemico.setText("nessun nemico");
-            immagineNemicoPannello.setImage(null);
-            return;
-        }
-
-        statisticheNemico.setText(
-                nemicoCorrente.getNome() + "\n" +
-                        "Vita: " + nemicoCorrente.getPuntiVita() +
-                        "/" + nemicoCorrente.getMaxVita() + "\n" +
-                        "Attacco: " + nemicoCorrente.getAttacco() + "\n" +
-                        "Difesa: " + nemicoCorrente.getDifesa()
-        );
-
-        String percorso;
-
-        if (nemicoCorrente.getNome().contains("Pipistrello")) {
-            percorso = "/immagini/PIPISTRELLO.png";
-        }
-        else if (nemicoCorrente.getNome().contains("Scheletro")) {
-            percorso = "/immagini/SCHELETRO.png";
-        }
-        else if (nemicoCorrente.getNome().contains("Zombie")) {
-            percorso = "/immagini/ZOMBIE.png";
-        }
-        else if (nemicoCorrente.getNome().contains("Goblin")) {
-            percorso = "/immagini/GOBLIN.png";
-        }
-        else {
-            immagineNemicoPannello.setImage(null);
-            return;
-        }
-
-        Image immagine = new Image(
-                getClass().getResourceAsStream(percorso)
-        );
-
-        immagineNemicoPannello.setImage(immagine);
-    }
-
-    private void aggiornaPannelloEroe() {
-
-        statisticheEroe.setText(
-                "EROE \n" +
-                        "Vita: " + eroe.getPuntiVita() +
-                        "/" + eroe.getMaxVita() + "\n" +
-                        "Attacco: " + eroe.getAttacco() + "\n" +
-                        "Difesa: " + eroe.getDifesa()
-        );
-    }
-
-    private void mostraMessaggioCura() {
-
-        messaggioCura.setVisible(true);
-        messaggioCura.setManaged(true);
-
-        PauseTransition pausa =
-                new PauseTransition(Duration.seconds(2));
-
-        pausa.setOnFinished(evento -> {
-            messaggioCura.setVisible(false);
-            messaggioCura.setManaged(false);
-        });
-
-        pausa.play();
-    }
 }

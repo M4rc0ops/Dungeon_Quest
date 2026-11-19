@@ -5,4 +5,5 @@ public enum Direzione {
     SUD,
     EST,
     OVEST
+
 }

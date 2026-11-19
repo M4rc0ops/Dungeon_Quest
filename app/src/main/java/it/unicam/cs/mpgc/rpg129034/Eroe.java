@@ -14,7 +14,13 @@ public class Eroe extends Entita {
 
 
     public  Posizione getPosizione(){
-        return posizione;
+        return new Posizione(posizione.getX(),posizione.getY());
+    }
+
+
+
+    public void aggiornaPosizione(int x, int y){
+        posizione.sposta(x,y);
     }
 
 

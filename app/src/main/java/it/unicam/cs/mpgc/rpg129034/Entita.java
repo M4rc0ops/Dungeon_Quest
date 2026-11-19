@@ -2,11 +2,11 @@ package it.unicam.cs.mpgc.rpg129034;
 
 public abstract class Entita {
 
-    private String nome;
+    private final String nome;
     private int puntiVita;
-    private int maxVita;
-    private int attacco;
-    private int difesa;
+    private final int maxVita;
+    private final int attacco;
+    private final int difesa;
 
 
 

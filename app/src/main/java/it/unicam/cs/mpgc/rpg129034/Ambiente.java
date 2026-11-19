@@ -2,11 +2,12 @@ package it.unicam.cs.mpgc.rpg129034;
 
 public abstract class Ambiente {
 
-    private String nome;
-    private int coordinataX;
-    private int coordinataY;
-    private int larghezza;
-    private int altezza;
+
+    private final String nome;
+    private final int coordinataX;
+    private final int coordinataY;
+    private final int larghezza;
+    private final int altezza;
 
 
     public Ambiente(String nome, int coordinataX, int coordinataY, int larghezza, int altezza) {

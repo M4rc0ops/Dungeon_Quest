@@ -4,7 +4,7 @@ public class Combattimento {
 
     private void controllaEntita(Entita e1, Entita e2){
         if(e1 == null || e2 == null){
-            throw new IllegalArgumentException("le etita non possono essere null");
+            throw new IllegalArgumentException("le entita non possono essere nulle");
         }
     }
 

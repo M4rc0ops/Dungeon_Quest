@@ -32,7 +32,7 @@ public class PianoTest {
     @Test
     void testAggiungiAmbiente(){
         Piano piano = new Piano(1);
-        Stanza stanza = new Stanza("nome",new ArrayList<>(),0,0,5,5);
+        Stanza stanza = new Stanza("nome",0,0,5,5);
 
         piano.aggiungiAmbiente(stanza);
 
@@ -53,7 +53,7 @@ public class PianoTest {
     @Test
     void testGetAmbientiCopia(){
         Piano piano = new Piano(1);
-        Stanza stanza = new Stanza("nome",new ArrayList<>(),0,0,5,5);
+        Stanza stanza = new Stanza("nome",0,0,5,5);
         piano.aggiungiAmbiente(stanza);
 
         List<Ambiente> ambienti = piano.getAmbienti();
@@ -70,7 +70,7 @@ public class PianoTest {
 
         assertEquals(0,piano.getNumeroAmbienti());
 
-        piano.aggiungiAmbiente(new Stanza("nome",new ArrayList<>(),0,0,5,5));
+        piano.aggiungiAmbiente(new Stanza("nome",0,0,5,5));
         assertEquals(1,piano.getNumeroAmbienti());
     }
 
@@ -78,7 +78,7 @@ public class PianoTest {
     @Test
     void testAggiungiAmbienteDuplicato(){
         Piano piano = new Piano(1);
-        Stanza stanza = new Stanza("nome",new ArrayList<>(),0,0,5,5);
+        Stanza stanza = new Stanza("nome",0,0,5,5);
         piano.aggiungiAmbiente(stanza);
 
         assertThrows(IllegalArgumentException.class, () -> piano.aggiungiAmbiente(stanza));
@@ -90,8 +90,8 @@ public class PianoTest {
     void testAggiungiAmbientiConStessoNome(){
         Piano piano = new Piano(1);
 
-        Stanza stanza1 = new Stanza("nome",new ArrayList<>(),0,0,5,5);
-        Stanza stanza2 = new Stanza("nome",new ArrayList<>(),5,0,5,5);
+        Stanza stanza1 = new Stanza("nome",0,0,5,5);
+        Stanza stanza2 = new Stanza("nome",5,0,5,5);
 
         piano.aggiungiAmbiente(stanza1);
         piano.aggiungiAmbiente(stanza2);
@@ -103,7 +103,7 @@ public class PianoTest {
     @Test
     void testContieneAmbiente(){
         Piano piano = new Piano(1);
-        Stanza stanza = new Stanza("nome",new ArrayList<>(),0,0,5,5);
+        Stanza stanza = new Stanza("nome",0,0,5,5);
 
         assertFalse(piano.contieneAmbiente(stanza));
         piano.aggiungiAmbiente(stanza);
@@ -114,8 +114,8 @@ public class PianoTest {
     @Test
     void testAggiungiAmbienteStesseCoordinate(){
         Piano piano = new Piano(1);
-        Stanza stanza1= new Stanza("nome1",new ArrayList<>(),1,2,5,5);
-        Stanza stanza2= new Stanza("nome2",new ArrayList<>(),1,2,5,5);
+        Stanza stanza1= new Stanza("nome1",1,2,5,5);
+        Stanza stanza2= new Stanza("nome2",1,2,5,5);
 
         piano.aggiungiAmbiente(stanza1);
 
@@ -127,7 +127,7 @@ public class PianoTest {
     @Test
     void testTrovaAmbienteEsistente(){
         Piano piano = new Piano(1);
-        Stanza stanza= new  Stanza("nome",new ArrayList<>(),2,3,5,5);
+        Stanza stanza= new  Stanza("nome",2,3,5,5);
 
         piano.aggiungiAmbiente(stanza);
 
@@ -146,7 +146,7 @@ public class PianoTest {
     @Test
     void testTrovaAmbienteCoordinateInterne(){
         Piano piano = new Piano(1);
-        Stanza stanza= new Stanza("nome",new ArrayList<>(),2,3,5,5);
+        Stanza stanza= new Stanza("nome",2,3,5,5);
 
         piano.aggiungiAmbiente(stanza);
         assertEquals(stanza,piano.trovaAmbiente(4,5));
@@ -188,7 +188,7 @@ public class PianoTest {
     @Test
     void testAggiungiCorridoioEStanza(){
         Piano piano = new Piano(1);
-        Stanza  stanza= new Stanza("nome",new ArrayList<>(),2,3,5,5);
+        Stanza  stanza= new Stanza("nome",2,3,5,5);
         Corridoio corridoio= new Corridoio("nome",7,3,5,5);
 
         piano.aggiungiAmbiente(stanza);

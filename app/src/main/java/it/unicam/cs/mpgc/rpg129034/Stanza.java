@@ -9,29 +9,13 @@ public class Stanza extends Ambiente{
     private Map<Nemico, Posizione> posizioneNemici;
 
 
-    public Stanza(String nome, List<Nemico> nemici,  int coordinataX, int coordinataY, int larghezza, int altezza){
-        super(nome,coordinataX,coordinataY, larghezza, altezza);
+    public Stanza(String nome,int coordinataX, int coordinataY, int larghezza, int altezza){
+        super(nome, coordinataX, coordinataY, larghezza, altezza);
 
-        if(nemici==null){
-            throw new IllegalArgumentException("la lista dei nemici non può essere null");
-        }
-
-        for(Nemico nemico: nemici){
-            if(nemico==null){
-                throw new IllegalArgumentException("la lista non può contenere nemici nulli");
-            }
-        }
-
-        this.nemici = new ArrayList<>(nemici);
+        this.nemici = new ArrayList<>();
         this.posizioneNemici = new HashMap<>();
         this.completata = false;
 
-    }
-
-
-
-    public Stanza(String nome,int coordinataX, int coordinataY, int larghezza, int altezza){
-        this(nome, new ArrayList<>(),coordinataX,coordinataY,larghezza,altezza);
     }
 
 
@@ -50,19 +34,14 @@ public class Stanza extends Ambiente{
 
 
 
-    public void aggiungiNemico(Nemico nemico){
-        if(nemico==null){
+    public void aggiungiNemico(Nemico nemico, int x, int y){
+
+        if(nemico == null){
             throw new IllegalArgumentException("il nemico non può essere nullo");
         }
 
-        this.nemici.add(nemico);
-    }
-
-
-
-    public void aggiungiNemico(Nemico nemico, int x, int y){
         controllaPosizioneNemico(x,y);
-        aggiungiNemico(nemico);
+        this.nemici.add(nemico);
         posizioneNemici.put(nemico, new Posizione(x,y));
     }
 

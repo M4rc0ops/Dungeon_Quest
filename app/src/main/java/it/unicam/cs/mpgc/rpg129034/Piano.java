@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Piano {
 
-    private int numero;
+    private final int numero;
     private List<Ambiente> ambienti;
     private TipoCella[][] griglia;
     private static final int DIMENSIONE_GRIGLIA = 45;
@@ -32,6 +32,9 @@ public class Piano {
     public int getNumero() {
         return numero;
     }
+    public int getDimensioneGriglia(){
+        return DIMENSIONE_GRIGLIA;
+    }
     public List<Ambiente> getAmbienti() {
         return new ArrayList<>(ambienti);
     }
@@ -44,9 +47,8 @@ public class Piano {
             throw new IllegalArgumentException("la stanza non può essere null");
         }
 
-        if(ambiente.getCoordinataX() < 0 || ambiente.getCoordinataY() < 0
-                || ambiente.getCoordinataX() + ambiente.getLarghezza() > DIMENSIONE_GRIGLIA ||
-                ambiente.getCoordinataY() + ambiente.getAltezza() > DIMENSIONE_GRIGLIA){
+        if(ambiente.getCoordinataX() > DIMENSIONE_GRIGLIA - ambiente.getLarghezza() ||
+        ambiente.getCoordinataY() > DIMENSIONE_GRIGLIA - ambiente.getAltezza()){
             throw new IllegalArgumentException("l'ambiente supera i limiti della griglia");
         }
 
@@ -101,6 +103,8 @@ public class Piano {
 
 
     public Ambiente trovaAmbiente(int x, int y){
+        controllaValoriXY(x, y);
+
         for(Ambiente ambiente : ambienti){
 
             if(x >= ambiente.getCoordinataX() && x < ambiente.getCoordinataX() + ambiente.getLarghezza()
@@ -131,14 +135,14 @@ public class Piano {
 
     public void impostaMappa(String[] mappa){
         if(mappa==null || mappa.length != DIMENSIONE_GRIGLIA){
-            throw new IllegalArgumentException("La mappa deve avere 45 righe");
+            throw new IllegalArgumentException("La mappa deve avere " + DIMENSIONE_GRIGLIA + " righe");
         }
 
         TipoCella[][] nuovaGriglia = new TipoCella[DIMENSIONE_GRIGLIA][DIMENSIONE_GRIGLIA];
 
         for(int riga = 0; riga< DIMENSIONE_GRIGLIA; riga++){
             if(mappa[riga]== null || mappa[riga].length() != DIMENSIONE_GRIGLIA){
-                throw new IllegalArgumentException("ogni riga deve avere 45 caratteri");
+                throw new IllegalArgumentException("ogni riga deve avere " + DIMENSIONE_GRIGLIA + " caratteri");
             }
             for(int colonna = 0; colonna< DIMENSIONE_GRIGLIA; colonna++){
                 char carattere = mappa[riga].charAt(colonna);
