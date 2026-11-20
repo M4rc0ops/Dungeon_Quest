@@ -10,6 +10,7 @@ public abstract class Ambiente {
     private final int altezza;
 
 
+
     public Ambiente(String nome, int coordinataX, int coordinataY, int larghezza, int altezza) {
         if(nome==null || nome.isBlank()){
             throw new IllegalArgumentException("il nome dell'ambiente non può essere vuoto");

@@ -24,8 +24,8 @@ import java.util.function.Consumer;
 public class SchermataGioco {
 
     private Piano piano;
-    private Eroe eroe;
-    private GestoreCombattimento gestoreCombattimento;
+    private final Eroe eroe;
+    private final GestoreCombattimento gestoreCombattimento;
     private Ambiente ambienteCorrente;
     private Stanza stanzaCorrente;
     private Nemico nemicoCorrente;
@@ -41,31 +41,23 @@ public class SchermataGioco {
     private ImageView immagineEroePannello;
     private ImageView immagineNemicoPannello;
     private HBox intestazionePiano;
+    private final Stage finestraGioco;
+    private final Runnable tornaAlMenu;
+    private final Runnable mostraMenuPausa;
+    private final Runnable salvaPerVittoria;
+    private final Runnable salvaPerSconfitta;
+    private final Consumer<Piano> aggiornaPianoInGioco;
 
-    private Stage finestraGioco;
-    private Runnable tornaAlMenu;
-    private Runnable mostraMenuPausa;
-    private Runnable salvaPerVittoria;
-    private Runnable salvaPerSconfitta;
-    private Consumer<Piano> aggiornaPianoInGioco;
-    private GestorePiani gestorePiani;
-
-    private VisualizzatoreMappa visualizzatoreMappa;
-
-    private GestoreMovimento gestoreMovimento;
-
+    private final GestorePiani gestorePiani;
+    private final VisualizzatoreMappa visualizzatoreMappa;
+    private final GestoreMovimento gestoreMovimento;
     private PannelloStatistiche pannelloStatistiche;
 
-    public SchermataGioco(
-            Stage finestraGioco,
-            Piano piano,
-            Eroe eroe,
-            GestoreCombattimento gestoreCombattimento,
-            Runnable tornaAlMenu,
-            Runnable mostraMenuPausa,
-            Runnable salvaPerVittoria,
-            Runnable salvaPerSconfitta,
-            Consumer<Piano> aggiornaPianoInGioco) {
+
+
+    public SchermataGioco( Stage finestraGioco, Piano piano, Eroe eroe, GestoreCombattimento gestoreCombattimento,
+                           Runnable tornaAlMenu, Runnable mostraMenuPausa, Runnable salvaPerVittoria,
+                           Runnable salvaPerSconfitta, Consumer<Piano> aggiornaPianoInGioco) {
 
         if (finestraGioco == null || piano == null || eroe == null ||
                 gestoreCombattimento == null || tornaAlMenu == null ||
@@ -86,9 +78,11 @@ public class SchermataGioco {
         this.salvaPerSconfitta = salvaPerSconfitta;
         this.aggiornaPianoInGioco = aggiornaPianoInGioco;
 
+        Posizione posizioneEroe = eroe.getPosizione();
+
         this.ambienteCorrente = piano.trovaAmbiente(
-                eroe.getPosizione().getX(),
-                eroe.getPosizione().getY()
+                posizioneEroe.getX(),
+                posizioneEroe.getY()
         );
 
         this.stanzaCorrente = null;
@@ -98,21 +92,32 @@ public class SchermataGioco {
         this.gestoreMovimento = new GestoreMovimento(piano,eroe);
     }
 
+
+
     public void mostraSchermataGioco() {
 
         griglia = new GridPane();
         informazioniCombattimento = new Label();
 
-        String testoPiano = "";
+        String testoPiano;
 
-        if (piano.getNumero() == 1) {
-            testoPiano = "SEI AL PRIMO PIANO";
-        }
-        else if (piano.getNumero() == 2) {
-            testoPiano = "SEI AL SECONDO PIANO";
-        }
-        else if (piano.getNumero() == 3) {
-            testoPiano = "SEI AL TERZO PIANO";
+        switch(piano.getNumero()){
+            case 1:
+                testoPiano = "SEI AL PRIMO PIANO";
+                break;
+
+            case 2:
+                testoPiano = "SEI AL SECONDO PIANO";
+                break;
+
+            case 3:
+                testoPiano = "SEI AL TERZO PIANO";
+                break;
+
+            default:
+                testoPiano = "PIANO SCONOSCIUTO";
+                break;
+
         }
 
         indicatorePiano = new Label(testoPiano);
@@ -126,7 +131,6 @@ public class SchermataGioco {
                         "-fx-background-radius: 8px;"
         );
 
-        indicatorePiano.setVisible(true);
 
         disegnaGriglia();
 
@@ -165,9 +169,7 @@ public class SchermataGioco {
         immagineEroePannello.setPreserveRatio(true);
 
         String percorsoEroe = "/immagini/EROE_" + direzioneEroe + ".png";
-        Image immagineEroe = new Image(
-                getClass().getResourceAsStream(percorsoEroe)
-        );
+        Image immagineEroe = new Image(getClass().getResourceAsStream(percorsoEroe) );
 
         immagineEroePannello.setImage(immagineEroe);
 
@@ -240,6 +242,7 @@ public class SchermataGioco {
         );
 
         pannelloInferiore.getChildren().add(istruzioniAttacco);
+        pannelloInferiore.getChildren().add(informazioniCombattimento);
 
         intestazionePiano = new HBox(indicatorePiano);
         intestazionePiano.setAlignment(Pos.CENTER);
@@ -309,6 +312,8 @@ public class SchermataGioco {
         attesa.play();
     }
 
+
+
     private void disegnaGriglia() {
         rappresentazioneEroe = visualizzatoreMappa.disegnaGriglia(
                 griglia,
@@ -318,6 +323,8 @@ public class SchermataGioco {
                 direzioneEroe
         );
     }
+
+
 
     private void gestisciMovimento(String direzione) {
 
@@ -332,7 +339,7 @@ public class SchermataGioco {
 
         direzioneEroe = gestoreMovimento.calcolaDirezioneEroe(direzione);
 
-        if (rappresentazioneEroe != null && direzioneEroe != null) {
+        if (rappresentazioneEroe != null) {
 
             Image nuovaImmagine = new Image( getClass().getResourceAsStream("/immagini/EROE_" + direzioneEroe + ".png") );
 
@@ -409,14 +416,11 @@ public class SchermataGioco {
 
                 stanzaCorrente = nuovaStanza;
 
-                nemicoCorrente =
-                        gestoreCombattimento.avviaCombattimento(
-                                stanzaCorrente
-                        );
+                nemicoCorrente = gestoreCombattimento.avviaCombattimento(stanzaCorrente);
+                pannelloStatistiche.aggiornaPannelloNemico(nemicoCorrente);
+
 
                 if (nemicoCorrente != null) {
-
-                    pannelloStatistiche.aggiornaPannelloNemico(nemicoCorrente);
 
                     informazioniCombattimento.setText(
                             "Nemico: " + nemicoCorrente.getNome() +
@@ -431,11 +435,15 @@ public class SchermataGioco {
         }
     }
 
+
+
     private void passaAlSecondoPiano() {
 
         cambiaPiano(gestorePiani.passaAlSecondoPiano(eroe), "SEI AL SECONDO PIANO");
 
     }
+
+
 
     private void passaAlTerzoPiano() {
 
@@ -444,7 +452,8 @@ public class SchermataGioco {
     }
 
 
-    public void cambiaPiano(Piano nuovoPiano, String messaggio){
+
+    private void cambiaPiano(Piano nuovoPiano, String messaggio){
         piano = nuovoPiano;
         aggiornaPianoInGioco.accept(piano);
         gestoreMovimento.aggiornaPiano(nuovoPiano);
@@ -453,20 +462,22 @@ public class SchermataGioco {
         stanzaCorrente = null;
         nemicoCorrente = null;
 
-        ambienteCorrente = gestoreMovimento.trovaAmbiente(eroe.getPosizione());
+        Posizione posizioneEroe = eroe.getPosizione();
+        ambienteCorrente = gestoreMovimento.trovaAmbiente(posizioneEroe);
 
         disegnaGriglia();
 
         informazioniCombattimento.setText("Sei arrivato al " + messaggio.toLowerCase() );
     }
 
+
+
     private void mostraIndicatorePiano(String messaggio) {
 
         indicatorePiano.setText(messaggio);
-
+        indicatorePiano.setVisible(true);
         intestazionePiano.setVisible(true);
         intestazionePiano.setManaged(true);
-        indicatorePiano.setVisible(true);
 
         PauseTransition attesa =
                 new PauseTransition(Duration.seconds(2));
@@ -474,10 +485,13 @@ public class SchermataGioco {
         attesa.setOnFinished(evento -> {
             intestazionePiano.setVisible(false);
             intestazionePiano.setManaged(false);
+            indicatorePiano.setVisible(false);
         });
 
         attesa.play();
     }
+
+
 
     private void eseguiTurnoCombattimento() {
 

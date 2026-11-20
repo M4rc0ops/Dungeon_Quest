@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Piano {
 
     private final int numero;
-    private List<Ambiente> ambienti;
+    private final List<Ambiente> ambienti;
     private TipoCella[][] griglia;
     private static final int DIMENSIONE_GRIGLIA = 45;
 
@@ -44,7 +44,7 @@ public class Piano {
     private void controllaAmbiente(Ambiente ambiente){
 
         if(ambiente == null){
-            throw new IllegalArgumentException("la stanza non può essere null");
+            throw new IllegalArgumentException("l'ambiente non può essere null");
         }
 
         if(ambiente.getCoordinataX() > DIMENSIONE_GRIGLIA - ambiente.getLarghezza() ||

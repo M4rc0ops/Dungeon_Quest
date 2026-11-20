@@ -9,9 +9,9 @@ public class Gioco extends Application{
     private Piano piano;
     private Eroe eroe;
     private GestoreCombattimento gestoreCombattimento;
-    private GestoreSchermate gestoreSchermate = new GestoreSchermate();
-    private GestoreSalvataggio gestoreSalvataggio = new GestoreSalvataggio();
-    private GestoreCaricamento  gestoreCaricamento = new GestoreCaricamento();
+    private final GestoreSchermate gestoreSchermate = new GestoreSchermate();
+    private final GestoreSalvataggio gestoreSalvataggio = new GestoreSalvataggio();
+    private final GestoreCaricamento  gestoreCaricamento = new GestoreCaricamento();
 
 
     @Override
@@ -20,6 +20,7 @@ public class Gioco extends Application{
         gestoreSchermate.mostraMenuPrincipale(finestra, () -> mostraMappa(finestra), () -> mostraSlotCaricamento(finestra));
 
     }
+
 
 
     private void mostraMappa(Stage finestra) {
@@ -32,6 +33,8 @@ public class Gioco extends Application{
                 () -> gestoreSchermate.mostraComandi(finestra, () -> mostraSchermataGioco(finestra)));
 
     }
+
+
 
     private void mostraSchermataGioco(Stage finestra) {
 
@@ -51,11 +54,18 @@ public class Gioco extends Application{
     }
 
 
+
     private Runnable creaAzioneSalvataggio(Stage finestra, int slot, boolean vittoria){
 
-        return () -> {salvaPartita(slot); if(vittoria)start(finestra); };
+        return () -> {
+            boolean salvato = salvaPartita(slot);
+            if (salvato && vittoria) {
+                start(finestra);
+            }
+        };
 
     }
+
 
 
     private void mostraSlotSalvataggio(Stage finestra, boolean vittoria){
@@ -67,6 +77,7 @@ public class Gioco extends Application{
     }
 
 
+
     private void mostraSlotCaricamento(Stage finestra){
 
        gestoreSchermate.mostraSlotCaricamento( () -> caricaPartita(finestra,1),
@@ -76,13 +87,19 @@ public class Gioco extends Application{
     }
 
 
+
     private void caricaPartita(Stage finestra, int slot){
 
         try{
 
-            eroe = new Eroe("Eroe");
-            piano = gestoreCaricamento.caricaPartita(eroe, slot);
-            gestoreCombattimento = new GestoreCombattimento(eroe);
+            Eroe nuovoEroe = new Eroe("Eroe");
+            Piano nuovoPiano = gestoreCaricamento.caricaPartita(nuovoEroe, slot);
+            GestoreCombattimento nuovoGestore = new GestoreCombattimento(nuovoEroe);
+
+            eroe = nuovoEroe;
+            piano = nuovoPiano;
+            gestoreCombattimento = nuovoGestore;
+
             mostraSchermataGioco(finestra);
 
         } catch(IOException e){
@@ -95,6 +112,7 @@ public class Gioco extends Application{
     }
 
 
+
     private void mostraMenuPausa(Stage finestra){
         gestoreSchermate.mostraMenuPausa(
                 finestra,
@@ -104,19 +122,22 @@ public class Gioco extends Application{
     }
 
 
-    private void salvaPartita(int slot) {
+
+    private boolean salvaPartita(int slot) {
 
         try{
             gestoreSalvataggio.salvaPartita(piano, eroe, slot);
             gestoreSchermate.mostraAvvisoSalvataggio(slot);
+
+            return true;
 
         } catch (IOException e) {
             gestoreSchermate.mostraErrore("Errore",
                     "Salvataggio non riuscito",
                     "Errore durante il salvataggio");
 
+            return false;
         }
-
 
     }
 

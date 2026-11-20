@@ -6,31 +6,46 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
+
 public class PannelloStatistiche {
 
-    private Label statisticheEroe;
-    private Label statisticheNemico;
-    private ImageView immagineNemicoPannello;
-    private Label messaggioCura;
 
-    public PannelloStatistiche(Label statisticheEroe, Label statisticheNemico, ImageView immaggineNemicoPannello,
+    private final Label statisticheEroe;
+    private final Label statisticheNemico;
+    private final ImageView immagineNemicoPannello;
+    private final Label messaggioCura;
+
+
+
+    public PannelloStatistiche(Label statisticheEroe, Label statisticheNemico, ImageView immagineNemicoPannello,
                                Label messaggioCura) {
+
+        if(statisticheEroe == null || statisticheNemico == null ||  immagineNemicoPannello == null || messaggioCura == null){
+            throw new IllegalArgumentException("i componenti del pannello non possono essere nulli");
+        }
 
         this.statisticheEroe = statisticheEroe;
         this.statisticheNemico = statisticheNemico;
-        this.immagineNemicoPannello = immaggineNemicoPannello;
+        this.immagineNemicoPannello = immagineNemicoPannello;
         this.messaggioCura = messaggioCura;
 
     }
 
 
+
     public void aggiornaPannelloEroe(Eroe eroe) {
+
+        if(eroe == null){
+            throw new IllegalArgumentException("l'eroe non può essere nullo");
+        }
+
         statisticheEroe.setText("EROE \n" + "Vita: " + eroe.getPuntiVita() +
                 "/" + eroe.getMaxVita() + "\n" +
                 "Attacco: " + eroe.getAttacco() + "\n" +
                 "Difesa: " + eroe.getDifesa() );
 
     }
+
 
 
     public void aggiornaPannelloNemico(Nemico nemicoCorrente) {
@@ -71,6 +86,7 @@ public class PannelloStatistiche {
 
         immagineNemicoPannello.setImage(immagine);
     }
+
 
 
     public void mostraMessaggioCura() {

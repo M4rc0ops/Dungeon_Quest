@@ -1,12 +1,16 @@
 package it.unicam.cs.mpgc.rpg129034;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
 
 public class Stanza extends Ambiente{
 
-    private List<Nemico> nemici;
+    private final List<Nemico> nemici;
     private boolean completata;
-    private Map<Nemico, Posizione> posizioneNemici;
+    private final Map<Nemico, Posizione> posizioneNemici;
+
 
 
     public Stanza(String nome,int coordinataX, int coordinataY, int larghezza, int altezza){
@@ -26,6 +30,7 @@ public class Stanza extends Ambiente{
     public boolean isCompletata() {
         return completata;
     }
+
 
 
     public void impostaCompletata(boolean completata){

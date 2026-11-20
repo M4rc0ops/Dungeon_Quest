@@ -7,11 +7,13 @@ public class GestoreMovimento {
     private final Eroe eroe;
 
 
+
     private void controllaValore(Object obj){
         if(obj == null){
             throw new IllegalArgumentException("il valore passato non può essere nullo");
         }
     }
+
 
 
     public GestoreMovimento(Piano piano, Eroe eroe) {
@@ -24,11 +26,13 @@ public class GestoreMovimento {
     }
 
 
+
     public void aggiornaPiano(Piano nuovoPiano){
         controllaValore(nuovoPiano);
 
         this.piano=nuovoPiano;
     }
+
 
 
     public Ambiente trovaAmbiente(Posizione posizione){
@@ -38,11 +42,14 @@ public class GestoreMovimento {
     }
 
 
+
     public Posizione calcolaNuovaPosizione(String direzione){
         controllaValore(direzione);
 
-        int nuovaX = eroe.getPosizione().getX();
-        int nuovaY = eroe.getPosizione().getY();
+        Posizione posizioneAttuale = eroe.getPosizione();
+
+        int nuovaX = posizioneAttuale.getX();
+        int nuovaY = posizioneAttuale.getY();
 
         switch (direzione){
             case "W":
@@ -71,6 +78,7 @@ public class GestoreMovimento {
     }
 
 
+
     public String calcolaDirezioneEroe(String direzione){
         controllaValore(direzione);
 
@@ -93,6 +101,7 @@ public class GestoreMovimento {
     }
 
 
+
     public boolean posizioneDentroMappa(Posizione posizione){
         controllaValore(posizione);
 
@@ -103,6 +112,7 @@ public class GestoreMovimento {
 
         return x >= 0 && x < dimensione && y >= 0 && y < dimensione;
     }
+
 
 
     public boolean casellaAttraversabile(Posizione posizione){
@@ -122,11 +132,13 @@ public class GestoreMovimento {
     }
 
 
+
     public boolean isUscitaPiano(Posizione posizione){
         controllaValore(posizione);
 
         return piano.getTipoCella(posizione.getX(), posizione.getY()) == TipoCella.USCITA_PIANO;
     }
+
 
 
     public boolean isCasellaVittoria(Posizione posizione){
@@ -135,6 +147,7 @@ public class GestoreMovimento {
         return piano.getNumero() == 3 && posizione.getX() >= 40 && posizione.getX() < 45 &&
                 posizione.getY() >= 25 && posizione.getY() < 31;
     }
+
 
 
     public void spostaEroe(Posizione nuovaPosizione){

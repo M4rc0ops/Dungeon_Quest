@@ -2,6 +2,7 @@ package it.unicam.cs.mpgc.rpg129034;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.DialogPane;
 import javafx.scene.input.KeyCode;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -13,9 +14,10 @@ import javafx.stage.Stage;
 
 public class GestoreSchermate {
 
+
     public void mostraIntroduzione(Stage finestra, Runnable mostraComandi) {
         Label titolo = new Label("Dungeon Quest");
-        titolo.setStyle("-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: gold;");
+        titolo.getStyleClass().add("titolo-introduzione");
 
         Label descrizione = new Label("Benvenuto in Dungeon Quest! \n\n" +
                 "Ti trovi all'interno di un dungeon misterioso, composto da tre piani.\n\n" +
@@ -23,17 +25,19 @@ public class GestoreSchermate {
 
         descrizione.setWrapText(true);
         descrizione.setMaxWidth(550);
-        descrizione.setStyle("-fx-font-size: 18px; -fx-text-fill: white; -fx-text-alignment: center;");
+        descrizione.getStyleClass().add("descrizione-introduzione");
 
         Label istruzione = new Label("Premi INVIO per continuare");
-        istruzione.setStyle("-fx-font-size: 16px; -fx-text-fill: gold");
+        istruzione.getStyleClass().add("istruzione-introduzione");
 
         VBox contenitore = new VBox(25);
         contenitore.setAlignment(Pos.CENTER);
-        contenitore.setStyle("-fx-background-color: #111111; -fx-padding: 35;");
+        contenitore.getStyleClass().add("contenitore-scuro");
+
         contenitore.getChildren().addAll(titolo, descrizione, istruzione);
 
         Scene scena = new Scene(contenitore, 800, 600);
+        scena.getStylesheets().add(getClass().getResource("/stili/stile.css").toExternalForm());
 
         scena.setOnKeyPressed(evento -> {
             if (evento.getCode() == KeyCode.ENTER) {
@@ -46,25 +50,28 @@ public class GestoreSchermate {
         contenitore.requestFocus();
     }
 
+
+
     public void mostraComandi(Stage finestra, Runnable avviaGioco) {
         Label titolo = new Label("Comandi di Gioco");
-        titolo.setStyle("-fx-font-size: 28px; -fx-text-fill: gold; -fx-font-weight: bold;");
+        titolo.getStyleClass().add("titolo-comandi");
 
         Label comandi = new Label("WASD - Movimento \n\n" +
                 "Z - attacco \n\n" +
                 "ESC - pausa");
 
-        comandi.setStyle("-fx-font-size: 18px; -fx-text-fill:white; -fx-text-alignment: center;");
+        comandi.getStyleClass().add("testo-comandi");
 
         Label istruzione = new Label("Premi INVIO per iniziare");
-        istruzione.setStyle("-fx-font-size: 16px; -fx-text-fill: gold");
+        istruzione.getStyleClass().add("istruzione-introduzione");
 
         VBox contenitore = new VBox(25);
         contenitore.setAlignment(Pos.CENTER);
-        contenitore.setStyle("-fx-background-color: #111111; -fx-padding: 35;");
+        contenitore.getStyleClass().add("contenitore-scuro");
         contenitore.getChildren().addAll(titolo, comandi, istruzione);
 
         Scene scena = new Scene(contenitore, 800, 600);
+        scena.getStylesheets().add(getClass().getResource("/stili/stile.css").toExternalForm());
 
         scena.setOnKeyPressed(evento -> {
             if (evento.getCode() == KeyCode.ENTER) {
@@ -77,123 +84,67 @@ public class GestoreSchermate {
         contenitore.requestFocus();
     }
 
-    public void mostraMenuPausa(
-            Stage finestra,
-            Runnable salvaPartita,
-            Runnable tornaAlMenu) {
+
+
+    public void mostraMenuPausa(Stage finestra, Runnable salvaPartita, Runnable tornaAlMenu) {
 
         Label titolo = new Label("PAUSA");
-        titolo.setStyle("-fx-font-size: 26px;" +
-                "-fx-font-weight: bold;" +
-                "-fx-text-fill: #4b3621;");
+        titolo.getStyleClass().add("titolo-menu");
 
         Button salva = new Button("Salva partita");
         Button continua = new Button("Continua");
         Button esci = new Button("Esci");
 
-        String stileNormale = "-fx-background-color: #f3e6cc;" +
-                "-fx-text-fill: #4b3621;" +
-                "-fx-font-size: 16px;" +
-                "-fx-font-weight: bold;" +
-                "-fx-border-color: #8b6b45;" +
-                "-fx-border-width: 2px;" +
-                "-fx-background-radius: 8px;" +
-                "-fx-border-radius: 8px;" +
-                "-fx-cursor: hand;";
-
-        String stileHover = "-fx-background-color: #dfc49b;" +
-                "-fx-text-fill: #4b3621;" +
-                "-fx-font-size: 16px;" +
-                "-fx-font-weight: bold;" +
-                "-fx-border-color: #8b6b45;" +
-                "-fx-border-width: 2px;" +
-                "-fx-background-radius: 8px;" +
-                "-fx-border-radius: 8px;" +
-                "-fx-cursor: hand;";
 
         salva.setPrefSize(220, 42);
         continua.setPrefSize(220, 42);
         esci.setPrefSize(220, 42);
 
-        salva.setStyle(stileNormale);
-        continua.setStyle(stileNormale);
-        esci.setStyle(stileNormale);
+        salva.getStyleClass().add("pulsante-menu");
+        continua.getStyleClass().add("pulsante-menu");
+        esci.getStyleClass().add("pulsante-menu");
 
-        salva.setOnMouseEntered(evento -> salva.setStyle(stileHover));
-        salva.setOnMouseExited(evento -> salva.setStyle(stileNormale));
-
-        continua.setOnMouseEntered(evento -> continua.setStyle(stileHover));
-        continua.setOnMouseExited(evento -> continua.setStyle(stileNormale));
-
-        esci.setOnMouseEntered(evento -> esci.setStyle(stileHover));
-        esci.setOnMouseExited(evento -> esci.setStyle(stileNormale));
 
         salva.setOnAction(evento -> salvaPartita.run());
 
-        continua.setOnAction(evento ->
-                ((Stage) continua.getScene().getWindow()).close());
+        continua.setOnAction(evento -> ((Stage) continua.getScene().getWindow()).close() );
 
-        esci.setOnAction(evento -> {
-            ((Stage) esci.getScene().getWindow()).close();
-            tornaAlMenu.run();
-        });
+        esci.setOnAction(evento -> {( (Stage)esci.getScene().getWindow()).close(); tornaAlMenu.run(); } );
 
         VBox contenitore = new VBox(15);
         contenitore.setAlignment(Pos.CENTER);
-        contenitore.setStyle("-fx-background-color: #e8dcc8; -fx-padding: 25;");
+        contenitore.getStyleClass().add("contenitore-menu");
         contenitore.getChildren().addAll(titolo, continua, salva, esci);
 
         Stage menuPausa = new Stage();
         menuPausa.initOwner(finestra);
         menuPausa.initModality(Modality.WINDOW_MODAL);
         menuPausa.setTitle("Menu di pausa");
-        menuPausa.setScene(new Scene(contenitore, 300, 280));
+
+        Scene scena = new Scene(contenitore, 300, 280);
+        scena.getStylesheets().add(getClass().getResource("/stili/stile.css").toExternalForm());
+
+        menuPausa.setScene(scena);
+
         menuPausa.show();
     }
+
 
 
     public void mostraSlotSalvataggio(Runnable salvaSlot1, Runnable salvaSlot2, Runnable salvaSlot3) {
 
         Label titolo = new Label("SCEGLI LO SLOT");
-        titolo.setStyle("-fx-font-size: 22px;" +
-                "-fx-font-weight: bold;" +
-                "-fx-text-fill: #4b3621;");
+        titolo.getStyleClass().add("titolo-slot");
 
         Button slot1 = new Button("Slot 1");
         Button slot2 = new Button("Slot 2");
         Button slot3 = new Button("Slot 3");
 
-
-        String stileNormale = "-fx-background-color: #f3e6cc;" +
-                "-fx-text-fill: #4b3621;" +
-                "-fx-font-size: 16px;" +
-                "-fx-font-weight: bold;" +
-                "-fx-border-color: #8b6b45;" +
-                "-fx-border-width: 2px;" +
-                "-fx-background-radius: 8px;" +
-                "-fx-border-radius: 8px;" +
-                "-fx-cursor: hand;";
-
-
-        String stileHover = "-fx-background-color: #dfc49b;" +
-                "-fx-text-fill: #4b3621;" +
-                "-fx-font-size: 16px;" +
-                "-fx-font-weight: bold;" +
-                "-fx-border-color: #8b6b45;" +
-                "-fx-border-width: 2px;" +
-                "-fx-background-radius: 8px;" +
-                "-fx-border-radius: 8px;" +
-                "-fx-cursor: hand;";
-
         Button[] pulsanti = {slot1, slot2, slot3};
 
         for(Button pulsante : pulsanti){
             pulsante.setPrefSize(200,40);
-            pulsante.setStyle(stileNormale);
-
-            pulsante.setOnMouseEntered(evento -> pulsante.setStyle(stileHover) );
-            pulsante.setOnMouseExited(evento -> pulsante.setStyle(stileNormale) );
-
+            pulsante.getStyleClass().add("pulsante-menu");
         }
 
         Stage finestraSlot = new Stage();
@@ -208,57 +159,35 @@ public class GestoreSchermate {
         VBox contenitore = new VBox(15);
 
         contenitore.setAlignment(Pos.CENTER);
-        contenitore.setStyle("-fx-background-color: #e8dcc8; -fx-padding: 25;");
+        contenitore.getStyleClass().add("contenitore-menu");
         contenitore.getChildren().addAll(titolo, slot1, slot2, slot3);
 
         finestraSlot.setTitle("Salvataggi");
-        finestraSlot.setScene(new Scene(contenitore, 300, 250));
+        Scene scena = new Scene(contenitore, 300, 250);
+        scena.getStylesheets().add(getClass().getResource("/stili/stile.css").toExternalForm());
+
+        finestraSlot.setScene(scena);
         finestraSlot.show();
 
     }
 
 
+
     public void mostraSlotCaricamento(Runnable caricaSlot1,  Runnable caricaSlot2, Runnable caricaSlot3) {
 
-        Label titolo = new Label("CARICARA PARTITA");
-        titolo.setStyle("-fx-font-size: 20px;" +
-                "-fx-font-weight: bold;" +
-                "-fx-text-fill: #4b3621;" );
+        Label titolo = new Label("CARICA PARTITA");
+        titolo.getStyleClass().add("titolo-slot");
 
         Button slot1 = new Button("Slot 1");
         Button slot2 = new Button("Slot 2");
         Button slot3 = new Button("Slot 3");
 
 
-        String stileNormale = "-fx-background-color: #f3e6cc;" +
-                "-fx-text-fill: #4b3621;" +
-                "-fx-font-size: 16px;" +
-                "-fx-font-weight: bold;" +
-                "-fx-border-color: #8b6b45;" +
-                "-fx-border-width: 2px;" +
-                "-fx-background-radius: 8px;" +
-                "-fx-border-radius: 8px;" +
-                "-fx-cursor: hand;";
-
-
-        String stileHover = "-fx-background-color: #dfc49b;" +
-                "-fx-text-fill: #4b3621;" +
-                "-fx-font-size: 16px;" +
-                "-fx-font-weight: bold;" +
-                "-fx-border-color: #8b6b45;" +
-                "-fx-border-width: 2px;" +
-                "-fx-background-radius: 8px;" +
-                "-fx-border-radius: 8px;" +
-                "-fx-cursor: hand;";
-
         Button[] pulsanti = {slot1, slot2, slot3};
 
         for(Button pulsante : pulsanti){
             pulsante.setPrefSize(200,40);
-            pulsante.setStyle(stileNormale);
-
-            pulsante.setOnMouseEntered(evento -> pulsante.setStyle(stileHover) );
-            pulsante.setOnMouseExited(evento -> pulsante.setStyle(stileNormale) );
+            pulsante.getStyleClass().add("pulsante-menu");
         }
 
         Stage finestraSlot =  new Stage();
@@ -270,63 +199,36 @@ public class GestoreSchermate {
 
         VBox contenitore = new VBox(15);
         contenitore.setAlignment(Pos.CENTER);
-        contenitore.setStyle("-fx-background-color: #e8dcc8; -fx-padding: 25;");
+        contenitore.getStyleClass().add("contenitore-menu");
         contenitore.getChildren().addAll(titolo, slot1, slot2, slot3);
 
-        finestraSlot.setScene(new Scene(contenitore, 330, 280));
+        Scene scena = new Scene(contenitore, 330, 280);
+        scena.getStylesheets().add(getClass().getResource("/stili/stile.css").toExternalForm());
+
+        finestraSlot.setScene(scena);
         finestraSlot.show();
 
     }
 
 
+
     public void mostraMenuPrincipale(Stage finestra, Runnable nuovaPartita, Runnable caricaPartita){
 
         Label testo = new Label("DUNGEON QUEST");
-        testo.setStyle("-fx-font-size: 34px; -fx-font-weight: bold; -fx-text-fill: #4b3621");
+        testo.getStyleClass().add("titolo-menu-principale");
 
         Button pulsanteNuovaPartita = new Button("Nuova partita");
         Button pulsanteCaricaPartita = new Button("Carica partita");
         Button esci = new Button("Esci");
-
-        String stileNormale = "-fx-background-color: #f3e6cc;" +
-                "-fx-text-fill: #4b3621;" +
-                "-fx-font-size: 16px;" +
-                "-fx-font-weight: bold;" +
-                "-fx-border-color: #8b6b45;" +
-                "-fx-border-width: 2px;" +
-                "-fx-background-radius: 8px;" +
-                "-fx-border-radius: 8px;" +
-                "-fx-cursor: hand;";
-
-
-        String stileHover = "-fx-background-color: #dfc49b;" +
-                "-fx-text-fill: #4b3621;" +
-                "-fx-font-size: 16px;" +
-                "-fx-font-weight: bold;" +
-                "-fx-border-color: #8b6b45;" +
-                "-fx-border-width: 2px;" +
-                "-fx-background-radius: 8px;" +
-                "-fx-border-radius: 8px;" +
-                "-fx-cursor: hand;";
 
 
         pulsanteNuovaPartita.setPrefSize(240,48);
         pulsanteCaricaPartita.setPrefSize(240,48);
         esci.setPrefSize(240,48);
 
-        pulsanteNuovaPartita.setStyle(stileNormale);
-        pulsanteCaricaPartita.setStyle(stileNormale);
-        esci.setStyle(stileNormale);
-
-
-        pulsanteNuovaPartita.setOnMouseEntered(evento -> pulsanteNuovaPartita.setStyle(stileHover));
-        pulsanteNuovaPartita.setOnMouseExited(evento -> pulsanteNuovaPartita.setStyle(stileNormale));
-
-        pulsanteCaricaPartita.setOnMouseEntered(evento -> pulsanteCaricaPartita.setStyle(stileHover));
-        pulsanteCaricaPartita.setOnMouseExited(evento -> pulsanteCaricaPartita.setStyle(stileNormale));
-
-        esci.setOnMouseEntered(evento -> esci.setStyle(stileHover));
-        esci.setOnMouseExited(evento -> esci.setStyle(stileNormale));
+        pulsanteCaricaPartita.getStyleClass().add("pulsante-menu");
+        pulsanteNuovaPartita.getStyleClass().add("pulsante-menu");
+        esci.getStyleClass().add("pulsante-menu");
 
 
         pulsanteNuovaPartita.setOnAction(evento -> nuovaPartita.run() );
@@ -337,12 +239,12 @@ public class GestoreSchermate {
 
         VBox contenitore = new VBox(12);
         contenitore.setAlignment(Pos.CENTER);
-        contenitore.setStyle("-fx-background-color: #e8dcc8; -fx-padding: 30;");
-
+        contenitore.getStyleClass().add("contenitore-menu-principale");
 
         contenitore.getChildren().addAll(testo,pulsanteNuovaPartita, pulsanteCaricaPartita, esci);
 
         Scene scena = new Scene(contenitore, 600, 400);
+        scena.getStylesheets().add(getClass().getResource("/stili/stile.css").toExternalForm());
 
         finestra.setTitle("Dungeon");
         finestra.setScene(scena);
@@ -352,22 +254,58 @@ public class GestoreSchermate {
     }
 
 
+
     public void mostraAvvisoSalvataggio(int slot){
         Alert avviso = new Alert(Alert.AlertType.INFORMATION);
         avviso.setTitle("Salvataggio");
         avviso.setHeaderText("Partita salvata");
         avviso.setContentText("Partita salvata nello slot " + slot);
+
+        DialogPane pannello = avviso.getDialogPane();
+        pannello.getStylesheets().add(getClass().getResource("/stili/stile.css").toExternalForm());
+
+        pannello.getStyleClass().add("contenitore-menu");
+
         avviso.showAndWait();
     }
 
 
+
     public void mostraErrore(String titolo, String intestazione, String messaggio){
 
-        Alert avviso = new  Alert(Alert.AlertType.ERROR);
-        avviso.setTitle(titolo);
-        avviso.setHeaderText(intestazione);
-        avviso.setContentText(messaggio);
-        avviso.showAndWait();
+        Label testoTitolo = new Label(intestazione);
+
+        testoTitolo.getStyleClass().add("titolo-errore");
+
+        Label testoMessaggio = new Label(messaggio);
+        testoMessaggio.setWrapText(true);
+        testoMessaggio.setMaxWidth(250);
+        testoMessaggio.getStyleClass().add("messaggio-errore");
+
+        Button conferma = new Button("Ok");
+
+
+        conferma.setPrefSize(220,42);
+        conferma.getStyleClass().add("pulsante-menu");
+
+        Stage finestraErrore = new Stage();
+        finestraErrore.setTitle(titolo);
+        finestraErrore.initModality(Modality.APPLICATION_MODAL);
+
+        conferma.setOnAction(evento -> finestraErrore.close());
+
+        VBox contenitore = new VBox(20);
+        contenitore.setAlignment(Pos.CENTER);
+        contenitore.getStyleClass().add("contenitore-menu");
+
+        contenitore.getChildren().addAll(testoTitolo,testoMessaggio,conferma);
+
+        Scene scena = new Scene(contenitore, 300, 280);
+        scena.getStylesheets().add(getClass().getResource("/stili/stile.css").toExternalForm());
+
+        finestraErrore.setScene(scena);
+        finestraErrore.showAndWait();
+
 
     }
 

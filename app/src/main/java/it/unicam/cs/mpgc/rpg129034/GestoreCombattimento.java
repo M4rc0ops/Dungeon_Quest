@@ -1,12 +1,15 @@
 package it.unicam.cs.mpgc.rpg129034;
 
+import java.util.List;
+
 public class GestoreCombattimento {
 
     private final Combattimento combattimento;
-    private Eroe eroe;
+    private final Eroe eroe;
     private Stanza stanzaCorrente;
     private Nemico nemicoCorrente;
     private boolean combattimentoAttivo;
+
 
 
     public GestoreCombattimento(Eroe eroe){
@@ -19,12 +22,20 @@ public class GestoreCombattimento {
     }
 
 
+
     public Nemico avviaCombattimento(Stanza stanza){
-        if(stanza == null || stanza.isCompletata() || stanza.getNemici().isEmpty()){
+        if(stanza == null || stanza.isCompletata() ){
             return null;
         }
 
-        for(Nemico nemico : stanza.getNemici()){
+        List<Nemico> nemici = stanza.getNemici();
+
+        if(nemici.isEmpty()){
+            return null;
+        }
+
+
+        for(Nemico nemico : nemici){
             if(!nemico.sconfitta()){
                 this.stanzaCorrente = stanza;
                 this.nemicoCorrente = nemico;
@@ -35,6 +46,7 @@ public class GestoreCombattimento {
         }
         return null;
     }
+
 
 
     public EsitoCombattimento eseguiTurnoCombattimento(){
@@ -52,7 +64,10 @@ public class GestoreCombattimento {
         if(nemicoCorrente.sconfitta()){
             nemicoCorrente = null;
 
-            for(Nemico nemico : stanzaCorrente.getNemici()){
+
+            List<Nemico> nemici = stanzaCorrente.getNemici();
+
+            for(Nemico nemico : nemici){
                 if(!nemico.sconfitta()){
                     nemicoCorrente = nemico;
                     return EsitoCombattimento.NEMICO_SCONFITTO;
@@ -74,9 +89,11 @@ public class GestoreCombattimento {
     }
 
 
+
     public Nemico getNemicoCorrente(){
         return nemicoCorrente;
     }
+
 
 
     public boolean isCombattimentoAttivo(){
