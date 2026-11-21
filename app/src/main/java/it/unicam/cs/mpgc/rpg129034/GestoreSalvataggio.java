@@ -11,6 +11,7 @@ public class GestoreSalvataggio {
 
 
 
+    // Salva nello slot indicato lo stato del piano, la posizione e la vita dell'eroe e lo stato dei nemici.
     public void salvaPartita(Piano piano, Eroe eroe, int slot) throws IOException {
 
         if(piano == null || eroe == null){

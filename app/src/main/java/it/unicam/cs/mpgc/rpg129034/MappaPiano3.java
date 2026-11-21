@@ -9,6 +9,7 @@ public class MappaPiano3 {
 
 
 
+    // Crea e restituisce la rappresentazione testuale della mappa del terzo piano.
     public static String[] creaMappa() {
         String[] mappa = new String[DIMENSIONE_GRIGLIA];
 
@@ -45,6 +46,7 @@ public class MappaPiano3 {
 
 
 
+    // Crea il terzo piano del dungeon, definendo la mappa e gli ambienti con i relativi nemici.
     public static Piano creaPiano() {
         Piano piano = new Piano(3);
 

@@ -13,6 +13,7 @@ public class Stanza extends Ambiente{
 
 
 
+    //Costruttore. Assegna i valori ereditati dalla classe Ambiente
     public Stanza(String nome,int coordinataX, int coordinataY, int larghezza, int altezza){
         super(nome, coordinataX, coordinataY, larghezza, altezza);
 
@@ -24,6 +25,7 @@ public class Stanza extends Ambiente{
 
 
 
+    //Getter
     public List<Nemico> getNemici() {
         return new ArrayList<>(nemici);
     }
@@ -33,12 +35,14 @@ public class Stanza extends Ambiente{
 
 
 
+    // Imposta lo stato di completamento della stanza.
     public void impostaCompletata(boolean completata){
         this.completata = completata;
     }
 
 
 
+    // Aggiunge un nemico alla stanza e ne registra la posizione dopo averla verificata.
     public void aggiungiNemico(Nemico nemico, int x, int y){
 
         if(nemico == null){
@@ -52,6 +56,7 @@ public class Stanza extends Ambiente{
 
 
 
+    // Verifica se tutti i nemici presenti nella stanza sono stati sconfitti.
     public boolean tuttiNemiciSconfitti(){
         for(Nemico nemico : this.nemici){
             if(!nemico.sconfitta()){
@@ -63,6 +68,7 @@ public class Stanza extends Ambiente{
 
 
 
+    // Segna la stanza come completata se tutti i nemici sono stati sconfitti.
     public void completa(){
         if(tuttiNemiciSconfitti()){
             completata = true;
@@ -71,6 +77,7 @@ public class Stanza extends Ambiente{
 
 
 
+    // Controlla che le coordinate indicate appartengano all'interno della stanza.
     private void controllaPosizioneNemico(int x, int y){
         if(x < getCoordinataX() || x >= getCoordinataX() + getLarghezza() ||
                 y < getCoordinataY() || y >= getCoordinataY() + getAltezza()){
@@ -81,6 +88,7 @@ public class Stanza extends Ambiente{
 
 
 
+    // Restituisce una copia della posizione del nemico indicato, oppure null.
     public Posizione getPosizioneNemico(Nemico nemico){
         Posizione posizione = posizioneNemici.get(nemico);
 

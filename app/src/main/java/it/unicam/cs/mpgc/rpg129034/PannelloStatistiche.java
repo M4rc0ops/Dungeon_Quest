@@ -17,8 +17,8 @@ public class PannelloStatistiche {
 
 
 
-    public PannelloStatistiche(Label statisticheEroe, Label statisticheNemico, ImageView immagineNemicoPannello,
-                               Label messaggioCura) {
+    //Costruttore. Verifica la validità dei campi e assegna i valori
+    public PannelloStatistiche(Label statisticheEroe, Label statisticheNemico, ImageView immagineNemicoPannello, Label messaggioCura) {
 
         if(statisticheEroe == null || statisticheNemico == null ||  immagineNemicoPannello == null || messaggioCura == null){
             throw new IllegalArgumentException("i componenti del pannello non possono essere nulli");
@@ -33,6 +33,7 @@ public class PannelloStatistiche {
 
 
 
+    // Aggiorna il pannello mostrando le statistiche e le caratteristiche dell'eroe.
     public void aggiornaPannelloEroe(Eroe eroe) {
 
         if(eroe == null){
@@ -48,6 +49,7 @@ public class PannelloStatistiche {
 
 
 
+    // Aggiorna il pannello mostrando le statistiche e le caratteristiche del nemico corrente.
     public void aggiornaPannelloNemico(Nemico nemicoCorrente) {
 
         if (nemicoCorrente == null) {
@@ -89,6 +91,7 @@ public class PannelloStatistiche {
 
 
 
+    // Mostra temporaneamente il messaggio che informa il giocatore della cura ricevuta.
     public void mostraMessaggioCura() {
 
         messaggioCura.setVisible(true);

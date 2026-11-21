@@ -14,6 +14,7 @@ public class GestoreCaricamento {
 
 
 
+    //Carica una partita dallo slot indicato, ripristinando lo stato del piano, dell'eroe e dei nemici
     public Piano caricaPartita(Eroe eroe, int slot) throws IOException{
 
         if(eroe == null){

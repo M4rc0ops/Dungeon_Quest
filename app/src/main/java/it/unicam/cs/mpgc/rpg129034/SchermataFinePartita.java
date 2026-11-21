@@ -14,7 +14,7 @@ public class SchermataFinePartita {
     private final Runnable salvaEdEsci;
 
 
-
+    //Costruttore. Verifica la validità dei campi e assegna i valori
     public SchermataFinePartita(Stage finestraGioco, Runnable tornaAlMenu, Runnable salvaEdEsci) {
         if(finestraGioco == null || tornaAlMenu == null ||  salvaEdEsci == null){
             throw new IllegalArgumentException("i parametri non possono essere nulli");
@@ -26,6 +26,7 @@ public class SchermataFinePartita {
 
 
 
+    // Mostra la schermata di sconfitta con il pulsante per tornare al menu principale.
     public void mostraSchermataSconfitta(){
         Label messaggio = new  Label("Sconfitta!");
 
@@ -55,6 +56,7 @@ public class SchermataFinePartita {
 
 
 
+    // Mostra la schermata di vittoria con il pulsante per salvare la partita e uscire.
     public void mostraSchermataVittoria(){
         Label messaggio = new Label("Hai completato il Dungeon! Complimenti!");
 
@@ -82,11 +84,6 @@ public class SchermataFinePartita {
         finestraGioco.show();
 
     }
-
-
-
-
-
 
 
 }

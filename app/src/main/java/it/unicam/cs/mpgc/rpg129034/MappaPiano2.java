@@ -9,6 +9,7 @@ public class MappaPiano2 {
 
 
 
+    // Crea e restituisce la rappresentazione testuale della mappa del secondo piano.
     public static String[] creaMappa(){
         String[] mappa = new String[DIMENSIONE_GRIGLIA];
 
@@ -47,6 +48,7 @@ public class MappaPiano2 {
 
 
 
+    // Crea il secondo piano del dungeon, definendo la mappa e gli ambienti con i relativi nemici.
     public static Piano creaPiano(){
         Piano piano = new Piano(2);
 

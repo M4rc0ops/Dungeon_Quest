@@ -26,7 +26,7 @@ public class VisualizzatoreMappa {
     private final Image immagineEroeSinistra;
 
 
-
+    //Costruttore. Assegna i valori
     public VisualizzatoreMappa(){
 
         immaginePavimento = caricaImmagine("PAVIMENTO.png");
@@ -47,6 +47,7 @@ public class VisualizzatoreMappa {
 
 
 
+    // Recupera un'immagine dalla cartella delle risorse e segnala se non è disponibile.
     private Image caricaImmagine(String nomeFile){
 
         java.net.URL risorsa = getClass().getResource("/immagini/" + nomeFile);
@@ -61,6 +62,7 @@ public class VisualizzatoreMappa {
 
 
 
+    // Seleziona l'immagine dell'eroe corrispondente alla direzione in cui è rivolto.
     private Image selezionaImmagineEroe(String direzioneEroe){
 
         switch (direzioneEroe){
@@ -84,6 +86,7 @@ public class VisualizzatoreMappa {
 
 
 
+    // Disegna la porzione di mappa relativa all'ambiente corrente, mostrando celle, nemici ed eroe.
     public ImageView disegnaGriglia(GridPane griglia, Piano piano, Ambiente ambienteCorrente, Eroe eroe, String direzioneEroe){
 
         griglia.getChildren().clear();

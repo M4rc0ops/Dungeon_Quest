@@ -8,6 +8,7 @@ public class Posizione {
 
 
 
+    //Costruttore. Assegna i valori
     public Posizione(int x,int y){
         this.x=x;
         this.y=y;
@@ -15,6 +16,7 @@ public class Posizione {
 
 
 
+    //Getter
     public int getX() {
         return x;
     }
@@ -24,6 +26,7 @@ public class Posizione {
 
 
 
+    // Aggiorna la posizione assegnando le nuove coordinate.
     public void sposta(int nuovaX, int nuovaY){
         this.x=nuovaX;
         this.y=nuovaY;

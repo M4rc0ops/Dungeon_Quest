@@ -55,6 +55,7 @@ public class SchermataGioco {
 
 
 
+    //Costruttore. Verifica la validità dei campi e assegna i valori
     public SchermataGioco( Stage finestraGioco, Piano piano, Eroe eroe, GestoreCombattimento gestoreCombattimento,
                            Runnable tornaAlMenu, Runnable mostraMenuPausa, Runnable salvaPerVittoria,
                            Runnable salvaPerSconfitta, Consumer<Piano> aggiornaPianoInGioco) {
@@ -94,6 +95,7 @@ public class SchermataGioco {
 
 
 
+    // Costruisce e mostra l'interfaccia di gioco, impostando la mappa, i pannelli e i comandi da tastiera.
     public void mostraSchermataGioco() {
 
         griglia = new GridPane();
@@ -122,14 +124,8 @@ public class SchermataGioco {
 
         indicatorePiano = new Label(testoPiano);
 
-        indicatorePiano.setStyle(
-                "-fx-font-size: 20px;" +
-                        "-fx-font-weight: bold;" +
-                        "-fx-text-fill: gold;" +
-                        "-fx-background-color: #2b2118;" +
-                        "-fx-padding: 10px;" +
-                        "-fx-background-radius: 8px;"
-        );
+        indicatorePiano.getStyleClass().add("indicatore-piano");
+
 
 
         disegnaGriglia();
@@ -137,16 +133,14 @@ public class SchermataGioco {
         griglia.setAlignment(Pos.CENTER);
 
         StackPane areaMappa = new StackPane(griglia);
-        areaMappa.setStyle("-fx-background-color: black;");
+        areaMappa.getStyleClass().add("area-mappa");
         areaMappa.setPrefSize(760, 520);
 
         ScrollPane scorrimento = new ScrollPane(areaMappa);
         scorrimento.setPannable(true);
         scorrimento.setFitToWidth(true);
         scorrimento.setFitToHeight(true);
-        scorrimento.setStyle(
-                "-fx-background: black; -fx-background-color: black;"
-        );
+        scorrimento.getStyleClass().add("scorrimento-mappa");
 
         informazioniCombattimento.setText("esplora il dungeon");
 
@@ -154,11 +148,7 @@ public class SchermataGioco {
         pannelloInferiore.setAlignment(Pos.CENTER);
         pannelloInferiore.setPadding(new Insets(5));
         pannelloInferiore.setPrefHeight(175);
-        pannelloInferiore.setStyle(
-                "-fx-background-color: #2b2118;" +
-                        "-fx-border-color: #9b8060;" +
-                        "-fx-border-width: 2;"
-        );
+        pannelloInferiore.getStyleClass().add("pannello-inferiore");
 
         HBox rigaPannello = new HBox(10);
         rigaPannello.setAlignment(Pos.CENTER);
@@ -184,16 +174,10 @@ public class SchermataGioco {
                         "Difesa: " + eroe.getDifesa()
         );
 
-        statisticheEroe.setStyle(
-                "-fx-text-fill: white; -fx-font-size: 15px;"
-        );
+        statisticheEroe.getStyleClass().add("statistiche-giocatore");
 
         messaggioCura = new Label("+10 PV!");
-        messaggioCura.setStyle(
-                "-fx-text-fill: #55ff55;" +
-                        "-fx-font-size: 18px;" +
-                        "-fx-font-weight: bold;"
-        );
+        messaggioCura.getStyleClass().add("messaggio-cura");
 
         messaggioCura.setVisible(false);
         messaggioCura.setManaged(false);
@@ -201,12 +185,10 @@ public class SchermataGioco {
         Separator divisore = new Separator();
         divisore.setOrientation(Orientation.VERTICAL);
         divisore.setPrefHeight(110);
-        divisore.setStyle("-fx-background-color: #9b8060");
+        divisore.getStyleClass().add("divisore-statistiche");
 
         statisticheNemico = new Label();
-        statisticheNemico.setStyle(
-                "-fx-text-fill: white; -fx-font-size: 15px;"
-        );
+        statisticheNemico.getStyleClass().add("statistiche-giocatore");
         statisticheNemico.setText("Nessun nemico");
 
         immagineNemicoPannello = new ImageView();
@@ -235,11 +217,7 @@ public class SchermataGioco {
         pannelloInferiore.getChildren().add(rigaPannello);
 
         Label istruzioniAttacco = new Label("Premi Z per Attaccare!");
-        istruzioniAttacco.setStyle(
-                "-fx-text-fill: gold;" +
-                        "-fx-font-size: 16px;" +
-                        "-fx-font-weight: bold;"
-        );
+        istruzioniAttacco.getStyleClass().add("istruzioni-attacco");
 
         pannelloInferiore.getChildren().add(istruzioniAttacco);
         pannelloInferiore.getChildren().add(informazioniCombattimento);
@@ -247,9 +225,7 @@ public class SchermataGioco {
         intestazionePiano = new HBox(indicatorePiano);
         intestazionePiano.setAlignment(Pos.CENTER);
         intestazionePiano.setPadding(new Insets(8));
-        intestazionePiano.setStyle(
-                "-fx-background-color: #2b2118;"
-        );
+        intestazionePiano.getStyleClass().add("intestazione-piano");
 
         VBox contenitore = new VBox(5);
 
@@ -262,6 +238,7 @@ public class SchermataGioco {
         VBox.setVgrow(scorrimento, Priority.ALWAYS);
 
         Scene scena = new Scene(contenitore, 800, 600);
+        scena.getStylesheets().add(getClass().getResource("/stili/stile.css").toExternalForm());
         contenitore.setFocusTraversable(true);
 
         scena.setOnKeyPressed(evento -> {
@@ -314,6 +291,7 @@ public class SchermataGioco {
 
 
 
+    // Disegna la griglia del piano mostrando l'ambiente corrente e la posizione dell'eroe.
     private void disegnaGriglia() {
         rappresentazioneEroe = visualizzatoreMappa.disegnaGriglia(
                 griglia,
@@ -326,6 +304,7 @@ public class SchermataGioco {
 
 
 
+    // Gestisce il movimento dell'eroe, aggiornando la posizione, la mappa e gli eventuali eventi della casella raggiunta.
     private void gestisciMovimento(String direzione) {
 
         if (gestoreCombattimento.isCombattimentoAttivo()) {
@@ -437,6 +416,7 @@ public class SchermataGioco {
 
 
 
+    // Porta l'eroe al secondo piano e aggiorna la schermata di gioco.
     private void passaAlSecondoPiano() {
 
         cambiaPiano(gestorePiani.passaAlSecondoPiano(eroe), "SEI AL SECONDO PIANO");
@@ -445,6 +425,7 @@ public class SchermataGioco {
 
 
 
+    // Porta l'eroe al terzo piano e aggiorna la schermata di gioco.
     private void passaAlTerzoPiano() {
 
         cambiaPiano(gestorePiani.passaAlTerzoPiano(eroe), "SEI AL TERZO PIANO");
@@ -453,6 +434,7 @@ public class SchermataGioco {
 
 
 
+    // Aggiorna il piano corrente, la posizione dell'eroe e la mappa visualizzata.
     private void cambiaPiano(Piano nuovoPiano, String messaggio){
         piano = nuovoPiano;
         aggiornaPianoInGioco.accept(piano);
@@ -472,6 +454,7 @@ public class SchermataGioco {
 
 
 
+    // Mostra temporaneamente un indicatore che comunica il piano raggiunto.
     private void mostraIndicatorePiano(String messaggio) {
 
         indicatorePiano.setText(messaggio);
@@ -493,6 +476,7 @@ public class SchermataGioco {
 
 
 
+    // Esegue un turno di combattimento e aggiorna le statistiche e i messaggi in base all'esito.
     private void eseguiTurnoCombattimento() {
 
         EsitoCombattimento esito =

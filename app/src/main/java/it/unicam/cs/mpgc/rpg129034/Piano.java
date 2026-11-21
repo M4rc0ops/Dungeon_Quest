@@ -13,6 +13,7 @@ public class Piano {
 
 
 
+    //Costruttore. Verifica la validità dei campi e assegna i valori
     public  Piano(int numero){
         if(numero<1 || numero>3){
             throw new IllegalArgumentException("il numero del piano deve essere compreso tra 1 e 3");
@@ -29,6 +30,7 @@ public class Piano {
 
 
 
+    //Getter
     public int getNumero() {
         return numero;
     }
@@ -38,9 +40,17 @@ public class Piano {
     public List<Ambiente> getAmbienti() {
         return new ArrayList<>(ambienti);
     }
+    public int getNumeroAmbienti(){
+        return ambienti.size();
+    }
+    public TipoCella getTipoCella(int x, int y){
+        controllaValoriXY(x,y);
+        return griglia[y][x];
+    }
 
 
 
+    // Verifica che un ambiente sia valido, rientri nella griglia e non sia già presente.
     private void controllaAmbiente(Ambiente ambiente){
 
         if(ambiente == null){
@@ -60,6 +70,7 @@ public class Piano {
 
 
 
+    // Aggiunge un ambiente al piano verificando che non si sovrapponga agli ambienti esistenti.
     public void aggiungiAmbiente(Ambiente ambiente){
 
         controllaAmbiente(ambiente);
@@ -90,18 +101,23 @@ public class Piano {
 
 
 
-    public int getNumeroAmbienti(){
-        return ambienti.size();
-    }
-
-
-
+    // Verifica se un determinato ambiente è presente nel piano.
     public boolean contieneAmbiente(Ambiente ambiente){
         return ambienti.contains(ambiente);
     }
 
 
 
+    //Metodo privato, controlla se le coordinate rientrino nei limiti della griglia
+    private void controllaValoriXY(int x, int y){
+        if(x<0 || x>= DIMENSIONE_GRIGLIA || y<0 || y>= DIMENSIONE_GRIGLIA){
+            throw new IllegalArgumentException("coordinate non valide");
+        }
+    }
+
+
+
+    // Restituisce l'ambiente che contiene le coordinate indicate, oppure null.
     public Ambiente trovaAmbiente(int x, int y){
         controllaValoriXY(x, y);
 
@@ -118,21 +134,7 @@ public class Piano {
 
 
 
-    private void controllaValoriXY(int x, int y){
-        if(x<0 || x>= DIMENSIONE_GRIGLIA || y<0 || y>= DIMENSIONE_GRIGLIA){
-            throw new IllegalArgumentException("coordinate non valide");
-        }
-    }
-
-
-
-    public TipoCella getTipoCella(int x, int y){
-        controllaValoriXY(x,y);
-        return griglia[y][x];
-    }
-
-
-
+    // Converte la rappresentazione testuale della mappa nella griglia di tipi di cella.
     public void impostaMappa(String[] mappa){
         if(mappa==null || mappa.length != DIMENSIONE_GRIGLIA){
             throw new IllegalArgumentException("La mappa deve avere " + DIMENSIONE_GRIGLIA + " righe");

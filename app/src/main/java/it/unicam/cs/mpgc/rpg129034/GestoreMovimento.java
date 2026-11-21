@@ -8,6 +8,7 @@ public class GestoreMovimento {
 
 
 
+    //Metodo privato che controlla che i valori passati non siano nulli
     private void controllaValore(Object obj){
         if(obj == null){
             throw new IllegalArgumentException("il valore passato non può essere nullo");
@@ -16,6 +17,7 @@ public class GestoreMovimento {
 
 
 
+    //Costruttore. Verifica la validità dei campi e assegna i valori
     public GestoreMovimento(Piano piano, Eroe eroe) {
         controllaValore(piano);
         controllaValore(eroe);
@@ -27,6 +29,7 @@ public class GestoreMovimento {
 
 
 
+    //Aggiorna il piano associato al gestore del movimento
     public void aggiornaPiano(Piano nuovoPiano){
         controllaValore(nuovoPiano);
 
@@ -35,6 +38,7 @@ public class GestoreMovimento {
 
 
 
+    //Restituisce l'ambiente del piano in cui si trova la posizione indicata
     public Ambiente trovaAmbiente(Posizione posizione){
         controllaValore(posizione);
 
@@ -43,6 +47,7 @@ public class GestoreMovimento {
 
 
 
+    // Calcola la nuova posizione dell'eroe in base alla direzione indicata.
     public Posizione calcolaNuovaPosizione(String direzione){
         controllaValore(direzione);
 
@@ -79,6 +84,7 @@ public class GestoreMovimento {
 
 
 
+    // Traduce il comando di movimento nella direzione corrispondente dell'eroe.
     public String calcolaDirezioneEroe(String direzione){
         controllaValore(direzione);
 
@@ -102,6 +108,7 @@ public class GestoreMovimento {
 
 
 
+    // Verifica se la posizione indicata rientra nei limiti della mappa.
     public boolean posizioneDentroMappa(Posizione posizione){
         controllaValore(posizione);
 
@@ -115,6 +122,7 @@ public class GestoreMovimento {
 
 
 
+    // Verifica se la casella indicata può essere attraversata dall'eroe.
     public boolean casellaAttraversabile(Posizione posizione){
         controllaValore(posizione);
 
@@ -133,6 +141,7 @@ public class GestoreMovimento {
 
 
 
+    // Verifica se la posizione indicata corrisponde all'uscita del piano.
     public boolean isUscitaPiano(Posizione posizione){
         controllaValore(posizione);
 
@@ -141,6 +150,7 @@ public class GestoreMovimento {
 
 
 
+    // Verifica se la posizione indicata corrisponde alla casella di vittoria del terzo piano.
     public boolean isCasellaVittoria(Posizione posizione){
         controllaValore(posizione);
 
@@ -150,6 +160,7 @@ public class GestoreMovimento {
 
 
 
+    // Aggiorna la posizione dell'eroe utilizzando le nuove coordinate.
     public void spostaEroe(Posizione nuovaPosizione){
         controllaValore(nuovaPosizione);
 

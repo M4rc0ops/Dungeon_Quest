@@ -14,6 +14,7 @@ public class Gioco extends Application{
     private final GestoreCaricamento  gestoreCaricamento = new GestoreCaricamento();
 
 
+    // Avvia l'applicazione mostrando il menu principale del gioco.
     @Override
     public void start(Stage finestra){
 
@@ -23,6 +24,7 @@ public class Gioco extends Application{
 
 
 
+    // Inizializza il primo piano, l'eroe e il gestore del combattimento, quindi mostra le schermate introduttive.
     private void mostraMappa(Stage finestra) {
         piano = MappaPiano1.creaPiano();
         eroe = new Eroe("Eroe");
@@ -36,6 +38,7 @@ public class Gioco extends Application{
 
 
 
+    // Crea e mostra la schermata di gioco collegandola ai gestori e alle operazioni disponibili.
     private void mostraSchermataGioco(Stage finestra) {
 
         SchermataGioco schermata = new SchermataGioco(
@@ -55,6 +58,7 @@ public class Gioco extends Application{
 
 
 
+    // Crea l'azione da eseguire per salvare la partita nello slot indicato e gestire l'eventuale vittoria.
     private Runnable creaAzioneSalvataggio(Stage finestra, int slot, boolean vittoria){
 
         return () -> {
@@ -68,6 +72,7 @@ public class Gioco extends Application{
 
 
 
+    // Mostra la finestra per scegliere lo slot in cui salvare la partita.
     private void mostraSlotSalvataggio(Stage finestra, boolean vittoria){
 
         gestoreSchermate.mostraSlotSalvataggio( creaAzioneSalvataggio(finestra, 1, vittoria),
@@ -78,6 +83,7 @@ public class Gioco extends Application{
 
 
 
+    // Mostra la finestra per scegliere lo slot da cui caricare una partita.
     private void mostraSlotCaricamento(Stage finestra){
 
        gestoreSchermate.mostraSlotCaricamento( () -> caricaPartita(finestra,1),
@@ -88,6 +94,7 @@ public class Gioco extends Application{
 
 
 
+    // Carica la partita dallo slot indicato e inizializza nuovamente l'eroe e il gestore del combattimento.
     private void caricaPartita(Stage finestra, int slot){
 
         try{
@@ -113,6 +120,7 @@ public class Gioco extends Application{
 
 
 
+    // Mostra il menu di pausa e collega le opzioni per salvare la partita o tornare al menu principale.
     private void mostraMenuPausa(Stage finestra){
         gestoreSchermate.mostraMenuPausa(
                 finestra,
@@ -123,6 +131,7 @@ public class Gioco extends Application{
 
 
 
+    // Salva la partita nello slot indicato e mostra un messaggio in base all'esito dell'operazione.
     private boolean salvaPartita(int slot) {
 
         try{
@@ -143,6 +152,7 @@ public class Gioco extends Application{
 
 
 
+    // Avvia l'applicazione.
     public static void main(String[] args) {
         launch(args);
     }

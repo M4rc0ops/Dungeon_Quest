@@ -12,6 +12,7 @@ public class GestoreCombattimento {
 
 
 
+    //Costruttore. Verifica la validità dei campi e assegna i valori
     public GestoreCombattimento(Eroe eroe){
         if(eroe == null){
             throw new IllegalArgumentException("l'eroe non può essere nullo");
@@ -23,6 +24,17 @@ public class GestoreCombattimento {
 
 
 
+    //Getter
+    public Nemico getNemicoCorrente(){
+        return nemicoCorrente;
+    }
+    public boolean isCombattimentoAttivo(){
+        return combattimentoAttivo;
+    }
+
+
+
+    //Avvia il combattimento in una stanza, selezionando il primo nemico in vita
     public Nemico avviaCombattimento(Stanza stanza){
         if(stanza == null || stanza.isCompletata() ){
             return null;
@@ -49,6 +61,7 @@ public class GestoreCombattimento {
 
 
 
+    //esegue un turno di combattimento e restituisce l'esito in base allo stato dell'eroe e dei nemici
     public EsitoCombattimento eseguiTurnoCombattimento(){
         if(!combattimentoAttivo || nemicoCorrente == null){
             return EsitoCombattimento.IN_CORSO;
@@ -88,17 +101,6 @@ public class GestoreCombattimento {
 
     }
 
-
-
-    public Nemico getNemicoCorrente(){
-        return nemicoCorrente;
-    }
-
-
-
-    public boolean isCombattimentoAttivo(){
-        return combattimentoAttivo;
-    }
 
 
 

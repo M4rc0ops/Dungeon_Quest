@@ -102,3 +102,52 @@
     -fx-text-fill: #4b3621;
 
 }
+
+.indicatore-piano {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: gold;
+    -fx-background-color: #2b2118;
+    -fx-padding: 10px;
+    -fx-background-radius: 8px;
+}
+
+.area-mappa {
+    -fx-background-color: black;
+}
+
+.scorrimento-mappa {
+    -fx-background: black;
+    -fx-background-color: black;
+}
+
+.pannello-inferiore {
+    -fx-background-color: #2b2118;
+    -fx-border-color: #9b8060;
+    -fx-border-width: 2px;
+}
+
+.statistiche-giocatore {
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+}
+
+.messaggio-cura {
+    -fx-text-fill: #55ff55;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.divisore-statistiche {
+    -fx-background-color: #9b8060;
+}
+
+.istruzioni-attacco {
+    -fx-text-fill: gold;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.intestazione-piano {
+    -fx-background-color: #2b2118;
+}

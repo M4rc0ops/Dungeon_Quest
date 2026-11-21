@@ -10,6 +10,7 @@ public abstract class Entita {
 
 
 
+    //Costruttore. Verifica la validità dei campi e assegna i valori
     public Entita(String nome, int puntiVita, int attacco, int difesa){
         if(nome==null || nome.isBlank()){
             throw new IllegalArgumentException("il nome non può essere nullo o vuoto");
@@ -32,6 +33,7 @@ public abstract class Entita {
 
 
 
+    //Getter
     public String getNome() {
         return nome;
     }
@@ -50,6 +52,7 @@ public abstract class Entita {
 
 
 
+    //Imposta i punti vita verificando che rientrino nei valori predefiniti
     public void impostaVita(int puntiVita){
         if(puntiVita<0 || puntiVita>maxVita){
             throw new IllegalArgumentException("punti vita non validi");
@@ -59,6 +62,7 @@ public abstract class Entita {
 
 
 
+    //Riduce i punti vita dell'entità in base al danno subito
     public void subisciDanno(int danno){
         if(danno<0){
             throw new IllegalArgumentException("il danno non può essere negativo");
@@ -72,12 +76,14 @@ public abstract class Entita {
 
 
 
+    //Verifica se l'entità è stata sconfitta
     public boolean sconfitta(){
         return puntiVita == 0;
     }
 
 
 
+    //Ripristina i punti vita dell'entità senza superare il limite massimo
     protected void curaPuntiVita(int puntiVita){
         if(puntiVita<0){
             throw new IllegalArgumentException("i punti vita non devono essere negativi");

@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 public class GestoreSchermate {
 
 
+    // Mostra la schermata introduttiva e permette di proseguire alla schermata dei comandi.
     public void mostraIntroduzione(Stage finestra, Runnable mostraComandi) {
         Label titolo = new Label("Dungeon Quest");
         titolo.getStyleClass().add("titolo-introduzione");
@@ -52,6 +53,7 @@ public class GestoreSchermate {
 
 
 
+    // Mostra i comandi di gioco e permette di avviare la partita.
     public void mostraComandi(Stage finestra, Runnable avviaGioco) {
         Label titolo = new Label("Comandi di Gioco");
         titolo.getStyleClass().add("titolo-comandi");
@@ -86,6 +88,7 @@ public class GestoreSchermate {
 
 
 
+    // Mostra il menu di pausa con le opzioni per salvare, riprendere o uscire dalla partita.
     public void mostraMenuPausa(Stage finestra, Runnable salvaPartita, Runnable tornaAlMenu) {
 
         Label titolo = new Label("PAUSA");
@@ -131,6 +134,7 @@ public class GestoreSchermate {
 
 
 
+    // Mostra la finestra che permette di scegliere lo slot in cui salvare la partita.
     public void mostraSlotSalvataggio(Runnable salvaSlot1, Runnable salvaSlot2, Runnable salvaSlot3) {
 
         Label titolo = new Label("SCEGLI LO SLOT");
@@ -173,6 +177,7 @@ public class GestoreSchermate {
 
 
 
+    // Mostra la finestra che permette di scegliere lo slot da cui caricare una partita.
     public void mostraSlotCaricamento(Runnable caricaSlot1,  Runnable caricaSlot2, Runnable caricaSlot3) {
 
         Label titolo = new Label("CARICA PARTITA");
@@ -212,6 +217,7 @@ public class GestoreSchermate {
 
 
 
+    // Mostra il menu principale con le opzioni per iniziare, caricare una partita o uscire.
     public void mostraMenuPrincipale(Stage finestra, Runnable nuovaPartita, Runnable caricaPartita){
 
         Label testo = new Label("DUNGEON QUEST");
@@ -255,6 +261,7 @@ public class GestoreSchermate {
 
 
 
+    // Mostra un avviso che conferma il salvataggio della partita nello slot indicato.
     public void mostraAvvisoSalvataggio(int slot){
         Alert avviso = new Alert(Alert.AlertType.INFORMATION);
         avviso.setTitle("Salvataggio");
@@ -271,6 +278,7 @@ public class GestoreSchermate {
 
 
 
+    // Mostra una finestra di errore con titolo, intestazione e messaggio personalizzati.
     public void mostraErrore(String titolo, String intestazione, String messaggio){
 
         Label testoTitolo = new Label(intestazione);
