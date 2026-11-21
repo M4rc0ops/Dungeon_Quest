@@ -34,13 +34,13 @@ cd Dungeon_Quest
 ### BUILD DEL PROGETTO
 
 ``` bash
-./gradlew build
+gradlew build
  ```
 
 ### ESECUZIONE
 
 ``` bash
-./gradlew run
+gradlew run
  ``` 
 
 
